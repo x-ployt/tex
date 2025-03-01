@@ -1,0 +1,95 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    /* General Styles */
+    .modal {
+        @apply rounded-lg !important;
+    }
+
+    .breadcrumb {
+        @apply bg-white !important;
+    }
+
+    .details-container {
+        @apply bg-white rounded border-t-4 border-[#4CAF50] !important;
+    }
+
+    .table-container {
+        @apply p-5 bg-white rounded border-t-4 border-[#4CAF50] !important;
+    }
+
+    #fileLink {
+        @apply text-black font-bold hover:underline !important;
+    }
+
+    /* Buttons */
+    #greenBtn, .greenBtn{
+        @apply w-auto bg-[#4CAF50] text-white hover:bg-[#388E3C] !important;
+    }
+
+    #lightGreenBtn, .lightGreenBtn {
+        @apply w-auto bg-[#A5D6A7] text-black hover:bg-[#81C784] !important;
+    }
+
+    /* Buttons */
+    #yellowBtn, .yellowBtn{
+        @apply w-auto bg-[#FBC02D] text-black hover:bg-[#d1aa48] !important;
+    }
+
+    #redBtn, .redBtn {
+        @apply w-auto bg-[#D32F2F] text-white hover:bg-[#B71C1C] !important;
+    }
+
+    #whiteBtn, .whiteBtn {
+        @apply w-auto bg-[#E8E4E6] hover:bg-[#E0E0E0] !important;
+    }
+
+    /* Icons */
+    #greenIcon {
+        @apply text-[#4CAF50] !important;
+    }
+
+    #redIcon {
+        @apply text-[#D32F2F] !important;
+    }
+
+    #yellowIcon {
+        @apply text-[#FBC02D] !important;
+    }
+
+    /* Modals */
+    #greenModal {
+        @apply bg-[#4CAF50] text-white !important;
+    }
+
+    #lightGreenModal {
+        @apply bg-[#A5D6A7] text-black !important;
+    }
+
+    .redModal {
+        @apply bg-[#D32F2F] text-white !important;
+    }
+
+    .modal-footer {
+        @apply bg-white !important;
+    }
+
+    /* Navigation */
+    .nav-item .nav-link {
+        @apply text-white !important;
+    }
+
+    .nav-treeview .nav-link {
+        @apply text-white !important;
+    }
+
+    .nav-item .nav-link.active {
+        @apply bg-white text-[#4CAF50] !important;
+    }
+
+    .nav-treeview .nav-link.active {
+        @apply bg-[#388E3C] text-[#FBC02D] !important;
+    }
+}
