@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\DeliveryValidation;
 use App\Models\Branch;
 use App\Models\Order;
+use App\Models\OrderHistory;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -68,6 +69,18 @@ class DeliveryController extends Controller
             'file_paths'   => json_encode($filePaths),
         ]);
 
+        // Capture previous order status before updating
+        $previousStatus = $order->order_status;
+
+        // Check if the order status has changed
+        if ($previousStatus !== $order->order_status) {
+            // Create an order history entry
+            OrderHistory::create([
+                'order_id' => $order->id,
+                'order_status' => 'Delivered',
+            ]);
+        }
+
         return redirect()->route('delivery.view', $order)
                          ->with('updateSuccess', 'Order marked as delivered.');
     }
@@ -82,6 +95,18 @@ class DeliveryController extends Controller
             // Assuming you have a column "cancel_reason" in your orders table
             'reason' => $request->reason,
         ]);
+
+        // Capture previous order status before updating
+        $previousStatus = $order->order_status;
+
+        // Check if the order status has changed
+        if ($previousStatus !== $order->order_status) {
+            // Create an order history entry
+            OrderHistory::create([
+                'order_id' => $order->id,
+                'order_status' => 'Cancelled',
+            ]);
+        }
 
         return redirect()->route('delivery.view', $order)
                          ->with('updateSuccess', 'Order marked as cancelled.');
