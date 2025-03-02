@@ -69,17 +69,10 @@ class DeliveryController extends Controller
             'file_paths'   => json_encode($filePaths),
         ]);
 
-        // Capture previous order status before updating
-        $previousStatus = $order->order_status;
-
-        // Check if the order status has changed
-        if ($previousStatus !== $order->order_status) {
-            // Create an order history entry
-            OrderHistory::create([
-                'order_id' => $order->id,
-                'order_status' => 'Delivered',
-            ]);
-        }
+        OrderHistory::create([
+            'order_id' => $order->id,
+            'order_status' => 'Delivered',
+        ]);
 
         return redirect()->route('delivery.view', $order)
                          ->with('updateSuccess', 'Order marked as delivered.');
@@ -96,17 +89,10 @@ class DeliveryController extends Controller
             'reason' => $request->reason,
         ]);
 
-        // Capture previous order status before updating
-        $previousStatus = $order->order_status;
-
-        // Check if the order status has changed
-        if ($previousStatus !== $order->order_status) {
-            // Create an order history entry
-            OrderHistory::create([
-                'order_id' => $order->id,
-                'order_status' => 'Cancelled',
-            ]);
-        }
+        OrderHistory::create([
+            'order_id' => $order->id,
+            'order_status' => 'Cancelled',
+        ]);
 
         return redirect()->route('delivery.view', $order)
                          ->with('updateSuccess', 'Order marked as cancelled.');
