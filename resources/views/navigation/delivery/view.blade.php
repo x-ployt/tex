@@ -99,6 +99,28 @@
 </div>
 
 
-
+{{-- Success Toast Notification --}}
+@push('scripts')
+@if(session()->has('updateSuccess'))
+    <script type="module">
+        $(function(){
+            Toast.fire({
+                icon: 'success',
+                title: '{{session('updateSuccess')}}'
+            })
+        })
+    </script>
+@endif
+@if($errors->any())
+    <script type="module">
+        $(function(){
+            Toast.fire({
+                icon: 'error',
+                title: '{{ $errors->first() }}'
+            });
+        });
+    </script>
+@endif
+@endpush
 
 @endsection
