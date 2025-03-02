@@ -69,10 +69,10 @@ class DeliveryController extends Controller
             'file_paths'   => json_encode($filePaths),
         ]);
 
-        OrderHistory::create([
-            'order_id' => $order->id,
-            'order_status' => 'Delivered',
-        ]);
+        OrderHistory::updateOrCreate(
+            ['order_id' => $order->id, 'order_status' => 'Delivered']
+        );
+        
 
         return redirect()->route('delivery.view', $order)
                          ->with('updateSuccess', 'Order marked as delivered.');
@@ -89,10 +89,10 @@ class DeliveryController extends Controller
             'reason' => $request->reason,
         ]);
 
-        OrderHistory::create([
-            'order_id' => $order->id,
-            'order_status' => 'Cancelled',
-        ]);
+        OrderHistory::updateOrCreate(
+            ['order_id' => $order->id, 'order_status' => 'Cancelled']
+        );
+        
 
         return redirect()->route('delivery.view', $order)
                          ->with('updateSuccess', 'Order marked as cancelled.');
