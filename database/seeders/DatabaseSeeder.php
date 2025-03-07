@@ -35,6 +35,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'SuperAdmin',
             'username' => 'SuperAdmin',
             'email' => 'superadmin@gmail.com',
+            'contact_number' => '09999999999',
             'password' => Hash::make('superadmin'),
             'branch_id' => Branch::where('branch_name', 'Main Branch')->first()->id,  // Get Admin department ID dynamically
         ]);
@@ -45,6 +46,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Admin',
             'username' => 'Admin',
             'email' => 'admin@gmail.com',
+            'contact_number' => '09999999999',
             'password' => Hash::make('adminadmin'),
             'branch_id' => Branch::where('branch_name', 'Main Branch')->first()->id,  // Get Admin department ID dynamically
         ]);
@@ -55,6 +57,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Rider',
             'username' => 'Rider',
             'email' => 'rider@gmail.com',
+            'contact_number' => '09999999999',
             'password' => Hash::make('riderrider'),
             'branch_id' => Branch::where('branch_name', 'Main Branch')->first()->id,  // Get Admin department ID dynamically
         ]);

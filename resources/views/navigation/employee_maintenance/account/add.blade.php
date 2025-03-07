@@ -49,6 +49,18 @@
                         <x-error-message field="email"/>
                     </div>
                     
+                    {{-- Contact Number --}}
+                    <div class="mb-3">
+                        <label for="contact_number">Contact Number:<span class="text-danger">*</span></label>
+                        <input type="text" name="contact_number" id="contact_number" class="form-control" 
+                        placeholder="Enter Contact Number" 
+                        pattern="[0-9]+" 
+                        maxlength="11" 
+                        oninput="this.value = this.value.replace(/[^0-9]/g, '');" 
+                        value="{{ old('contact_number') }}" 
+                        autocomplete="off" required>
+                    </div>
+                    
                     {{-- Branch Name --}}
                     <div class="mb-3">
                         <label for="branch_id">Branch:<span class="text-danger">*</span></label>
@@ -88,6 +100,7 @@
 </div>
 {{-- Add Account --}}
 
+{{-- Scripts --}}
 @push('scripts')
 <script>
     document.querySelector('#addAccountBtn').addEventListener('click', function(){
@@ -100,6 +113,7 @@
 
         const name = document.getElementById('name').value.trim();
         const username = document.getElementById('username').value.trim();
+        const contact_number = document.getElementById('contact_number').value.trim();
         const email = document.getElementById('email').value.trim();
         const branch_id = document.getElementById('branch_id').value.trim();
         const role_id = document.getElementById('role_id').value.trim();
@@ -133,6 +147,18 @@
                 icon: 'error',
                 title: 'Error',
                 text: 'Please enter email',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                allowEnterKey: false
+            });
+            return;
+        }
+
+        if (!contact_number) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Please enter contact number',
                 allowOutsideClick: false,
                 allowEscapeKey: false,
                 allowEnterKey: false

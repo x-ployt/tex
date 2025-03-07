@@ -45,8 +45,10 @@
     </div>
 </div>
 
-{{-- Success Toast Notification --}}
+{{-- Scripts --}}
 @push('scripts')
+
+{{-- Success Notification --}}
 @if(session()->has('updateSuccess'))
     <script type="module">
         $(function(){
@@ -56,7 +58,10 @@
             })
         })
     </script>
-@elseif($errors->has('updateBranch'))
+@endif
+
+{{-- Error Notification --}}
+@if($errors->has('updateBranch'))
     <script type="module">
         $(function(){
             const branchID = {{$errors->first('updateBranch')}}

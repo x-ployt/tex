@@ -32,6 +32,13 @@
                         value="{{ Auth::user()->email }}" readonly>
                 </div>
 
+                {{-- Contact Number --}}
+                <div class="mb-3">
+                    <label for="contact_number" class="form-label">Contact Number:</label>
+                    <input type="contact_number" class="form-control" id="contact_number{{ Auth::id() }}" name="contact_number" 
+                        value="{{ Auth::user()->contact_number }}" readonly>
+                </div>
+
                 {{-- Branch --}}
                 <div class="mb-3">
                     <label for="branch_id" class="form-label">Branch:</label>
@@ -57,8 +64,9 @@
         </div>
     </div>
 </div>
-{{-- END OF VIEW Profile --}}
+{{-- View Profile --}}
 
+{{-- Scripts --}}
 @push('scripts')
 <script>
     document.querySelector('#viewProfileBtn{{ Auth::id() }}').addEventListener('click', function() {

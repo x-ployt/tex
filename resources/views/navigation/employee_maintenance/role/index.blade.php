@@ -43,9 +43,7 @@
 </div>
 {{-- Data Table --}}
 
-
-
-
+{{-- Scripts --}}
 @push('scripts')
 
 <script type="module">
@@ -59,6 +57,7 @@
     });
 </script>
 
+{{-- Success Notification --}}
 @if(session()->has('addSuccess'))
     <script type="module">
         $(function(){
@@ -70,6 +69,7 @@
     </script>
 @endif
 
+{{-- Error Notification --}}
 @if($errors->has('addRole'))
     <script type="module">
         $(function(){

@@ -35,6 +35,10 @@
                 <span class="text-dark" style="font-size: 15px;">{{ $order->customer_address }}</span>
             </div>
             <div class="col-md-12 mt-2">
+                <h6 class="font-weight-bold d-inline">Customer Number:</h6>
+                <span class="text-dark" style="font-size: 15px;">{{ $order->customer_contact_number }}</span>
+            </div>
+            <div class="col-md-12 mt-2">
                 <h6 class="font-weight-bold d-inline">Branch:</h6>
                 <span class="text-dark" style="font-size: 15px;">{{ $order->branch->branch_name }}</span>
             </div>
@@ -98,9 +102,10 @@
     @endif
 </div>
 
-
-{{-- Success Toast Notification --}}
+{{-- Scripts --}}
 @push('scripts')
+
+{{-- Success Nofitication --}}
 @if(session()->has('updateSuccess'))
     <script type="module">
         $(function(){
@@ -111,6 +116,8 @@
         })
     </script>
 @endif
+
+{{-- Error Notification --}}
 @if($errors->any())
     <script type="module">
         $(function(){

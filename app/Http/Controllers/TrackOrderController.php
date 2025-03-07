@@ -27,6 +27,5 @@ class TrackOrderController extends Controller
             })
         ]);
     }
-
     
 }

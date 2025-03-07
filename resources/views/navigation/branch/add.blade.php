@@ -51,8 +51,9 @@
         </div>
     </div>
 </div>
-{{-- END OF ADD Branch --}}
+{{-- Add Branch --}}
 
+{{-- Scripts --}}
 @push('scripts')
 <script>
     document.querySelector('#addBranchBtn').addEventListener('click', function(){

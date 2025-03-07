@@ -54,7 +54,7 @@
 </div>
 {{-- Edit Branch --}}
 
-
+{{-- Scripts --}}
 @push('scripts')
 <script>
     document.querySelector('#editBranchBtn{{$branch->id}}').addEventListener('click', function(){

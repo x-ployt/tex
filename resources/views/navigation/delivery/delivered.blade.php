@@ -10,11 +10,13 @@
             <form action="{{ route('order.markDelivered', $order) }}" method="POST" enctype="multipart/form-data" id="deliveredForm{{ $order->id }}">
                 @csrf
                 @method('PUT')
+
                 {{-- Modal Header --}}
                 <div class="modal-header" id="greenBtn">
                     <h5 class="modal-title">Mark Order as Delivered</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+
                 {{-- Modal Body --}}
                 <div class="modal-body">
                     <h6 class="fw-bold mb-3">Please upload at least one proof photo to confirm delivery.</h6>
@@ -25,6 +27,7 @@
                         <input type="file" name="delivery_photos[]" id="deliveryPhotos{{ $order->id }}" class="form-control" multiple required accept="image/jpeg, image/png">
                     </div>                    
                 </div>
+
                 {{-- Modal Footer --}}
                 <div class="modal-footer">
                     <button type="button" onclick="markDelivered({{ $order->id }})" class="btn greenBtn" title="Submit Delivered">Submit</button>
@@ -35,6 +38,7 @@
     </div>
 </div>
 
+{{-- Scripts --}}
 @push('scripts')
 <script>
     // Delivered Button: show modal

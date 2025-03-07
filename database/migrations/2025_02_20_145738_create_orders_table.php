@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('order_no')->unique();
             $table->string('customer_name');
             $table->string('customer_address');
+            $table->string('customer_contact_number');
             $table->foreignId('assigned_user_id')->constrained('users');
             $table->foreignId('branch_id')->constrained('branches');
             $table->json('file_paths')->nullable();

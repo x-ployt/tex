@@ -10,11 +10,13 @@
             <form action="{{ route('order.markCancelled', $order) }}" method="POST" id="cancelledForm{{ $order->id }}">
                 @csrf
                 @method('PUT')
+
                 {{-- Modal Header --}}
                 <div class="modal-header" id="redBtn">
                     <h5 class="modal-title">Cancel Order</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
+
                 {{-- Modal Body --}}
                 <div class="modal-body">
                     <h6 class="fw-bold mb-3">Please select a cancellation reason.</h6>
@@ -29,6 +31,7 @@
                         </select>
                     </div>
                 </div>
+                
                 {{-- Modal Footer --}}
                 <div class="modal-footer">
                     <button type="button" onclick="markCancelled({{ $order->id }})" class="btn redBtn" title="Submit Cancellation">Submit</button>
@@ -39,6 +42,7 @@
     </div>
 </div>
 
+{{-- Scripts --}}
 @push('scripts')
 <script>
     

@@ -47,6 +47,7 @@
 </div>
 {{-- Add Role --}}
 
+{{-- Scripts --}}
 @push('scripts')
 <script>
     document.querySelector('#addRoleBtn').addEventListener('click', function(){

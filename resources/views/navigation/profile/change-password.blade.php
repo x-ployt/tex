@@ -53,6 +53,7 @@
     </div>
 </div>
 
+{{-- Scripts --}}
 @push('scripts')
 <script>
     document.querySelector('#changePasswordBtn{{ Auth::id() }}').addEventListener('click', function() {
@@ -104,6 +105,7 @@
 
 </script>
 
+{{-- Error Notification --}}
 @if ($errors->has('currentPassword'))
     @foreach ($errors->get('currentPassword') as $error)
         <script type="module">
@@ -118,6 +120,7 @@
     @endforeach
 @endif
 
+{{-- Error Notification --}}
 @if ($errors->has('newPassword'))
     @foreach ($errors->get('newPassword') as $error)
         <script type="module">
@@ -132,6 +135,7 @@
     @endforeach
 @endif
 
+{{-- Success Notification --}}
 @if(session()->has('changeSuccess'))
 <script type="module">
     $(function(){
