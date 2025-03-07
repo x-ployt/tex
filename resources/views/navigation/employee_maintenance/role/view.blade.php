@@ -23,6 +23,7 @@
     <div class="card-body">
 
         <div class="row">
+            {{-- Role Name --}}
             <div class="col-md-12">
                 <h6 class="font-weight-bold d-inline">Role Name:</h6>
                 <span class="text-dark" style="font-size: 15px;">{{ $role->role_name }}</span>
@@ -41,8 +42,10 @@
     </div>
 </div>
 
-{{-- Success Toast Notification --}}
+{{-- Scripts --}}
 @push('scripts')
+
+{{-- Success Notification --}}
 @if(session()->has('updateSuccess'))
     <script type="module">
         $(function(){
@@ -52,7 +55,10 @@
             })
         })
     </script>
-@elseif($errors->has('updateRole'))
+@endif
+
+{{-- Error Notification --}}
+@if($errors->has('updateRole'))
     <script type="module">
         $(function(){
             const roleID = {{$errors->first('updateRole')}}

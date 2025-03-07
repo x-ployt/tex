@@ -65,9 +65,7 @@
 </div>
 {{-- Data Table --}}
 
-
-
-
+{{-- Scripts --}}
 @push('scripts')
 
 <script type="module">
@@ -82,5 +80,4 @@
 </script>
 
 @endpush
-
 @endsection

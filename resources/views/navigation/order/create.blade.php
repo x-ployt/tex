@@ -29,24 +29,41 @@
         <form action="{{ route('order.store') }}" method="POST" id="singleOrderForm" enctype="multipart/form-data">
             @csrf
             @method('post')
+
+            {{-- Order Number --}}
             <div class="mb-3">
                 <label>Order No:</label>
                 <input type="text" name="order_no" id="order_no" class="form-control" value="{{ old('order_no') }}" required>
                 <x-error-message field="order_no"/>
             </div>
 
+            {{-- Customer Name --}}
             <div class="mb-3">
                 <label>Customer Name:</label>
                 <input type="text" name="customer_name" id="customer_name" class="form-control" value="{{ old('customer_name') }}" required>
                 <x-error-message field="customer_name"/>
             </div>
 
+            {{-- Customer Address --}}
             <div class="mb-3">
                 <label>Customer Address:</label>
                 <input type="text" name="customer_address" id="customer_address" class="form-control" value="{{ old('customer_address') }}" required>
                 <x-error-message field="customer_address"/>
             </div>
 
+            {{-- Customer Contact Number --}}
+            <div class="mb-3">
+                <label for="customer_contact_number">Contact Number:<span class="text-danger">*</span></label>
+                <input type="text" name="customer_contact_number" id="customer_contact_number" class="form-control" 
+                placeholder="Enter Contact Number" 
+                pattern="[0-9]+" 
+                maxlength="11" 
+                oninput="this.value = this.value.replace(/[^0-9]/g, '');" 
+                value="{{ old('customer_contact_number') }}" 
+                autocomplete="off" required>
+            </div>
+
+            {{-- Delivery Rider --}}
             <div class="mb-3">
                 <label>Assigned Delivery Rider:</label>
                 <select name="assigned_user_id" id="assigned_user_id" class="form-control select2" required>
@@ -58,6 +75,7 @@
                 <x-error-message field="assigned_user_id"/>
             </div>
 
+            {{-- Branch --}}
             <div class="mb-3">
                 <label>Branch:</label>
                 <select name="branch_id" id="branch_id" class="form-control" required>
@@ -89,28 +107,17 @@
                 <label>Upload Bulk Orders (CSV or JSON):</label>
                 <input type="file" name="bulk_orders" class="form-control" accept=".csv, .json" required>
                 <x-error-message field="bulk_orders"/>
-            </div>
-        
-            {{-- Mandatory Rider Selection --}}
-            <div class="mb-3">
-                <label>Assign Delivery Rider:</label>
-                <select name="assigned_user_id" id="assigned_user_id" class="form-control select2" required>
-                    <option value="" disabled selected>Select Rider</option>
-                    @foreach ($riders as $rider)
-                        <option value="{{ $rider->id }}">{{ $rider->name }}</option>
-                    @endforeach
-                </select>
-                <x-error-message field="assigned_user_id"/>
-            </div>
-        
+            </div>        
             <button type="submit" class="btn greenBtn">Upload Bulk Orders</button>
         </form>
 
     </div>
 </div>
 
-{{-- Success Toast Notification --}}
+{{-- Scripts --}}
 @push('scripts')
+
+{{-- Success Notification --}}
 @if(session()->has('addSuccess'))
     <script type="module">
         $(function(){
@@ -122,6 +129,7 @@
     </script>
 @endif
 
+{{-- Error Notification --}}
 @if($errors->any())
     <script type="module">
         $(function(){

@@ -4,6 +4,7 @@
     @method('put')
 </form>
 
+{{-- Scripts --}}
 @push('scripts')
 <script type="module">
     // Event listener for the deactivate button

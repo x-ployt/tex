@@ -28,6 +28,7 @@ class AccountValidation extends FormRequest
                 'name' => 'required|string|max:50',
                 'username' => 'required|string|unique:users,username,',
                 'email' => 'required|email|unique:users,email,',
+                'contact_number' => 'required|string|max:11',
                 'branch_id' => 'required|string|max:50',
                 'role_id' => 'required|string|max:50',
             ];
@@ -36,6 +37,7 @@ class AccountValidation extends FormRequest
                 'name' => 'required|string|max:50',
                 'username' => ['required', 'string', 'max:50', Rule::unique('users')->ignore($this->user->id)],
                 'email' => ['required', 'email', 'max:50', Rule::unique('users')->ignore($this->user->id)],
+                'contact_number' => 'required|string|max:11',
                 'branch_id' => 'required|string|max:50',
                 'role_id' => 'required|string|max:50',
             ];

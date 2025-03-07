@@ -21,7 +21,7 @@
                {{-- Modal Body --}}
                 <div class="modal-body">
 
-                    {{-- Name --}}
+                    {{-- Role Name --}}
                     <div class="mb-3">
                         <label for="role_name" class="form-label">Role Name:<span class="text-danger">*</span></label>
                         <input type="text" name="role_name" id="role_name{{$role->id}}" class="form-control" placeholder="Role Name" 
@@ -45,7 +45,7 @@
 </div>
 {{-- Edit Role --}}
 
-
+{{-- Scripts --}}
 @push('scripts')
 <script>
     document.querySelector('#editRoleBtn{{$role->id}}').addEventListener('click', function(){

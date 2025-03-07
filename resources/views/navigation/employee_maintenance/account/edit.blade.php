@@ -92,8 +92,10 @@
 </div>
 {{-- Edit Account --}}
 
+{{-- Reset Password Modal --}}
 @include('navigation/employee_maintenance/account/reset-password')
 
+{{-- Scripts --}}
 @push('scripts')
 <script>
     document.querySelector('#editAccountBtn{{$user->id}}').addEventListener('click', function(){

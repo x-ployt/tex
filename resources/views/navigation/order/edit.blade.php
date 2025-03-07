@@ -40,6 +40,13 @@
                                value="{{ $order->customer_address }}" required>
                     </div>
 
+                    {{-- Customer Contact Number --}}
+                    <div class="mb-3">
+                        <label for="customer_contact_number{{$order->id}}" class="form-label">Contact Number:<span class="text-danger">*</span></label>
+                        <input type="text" name="customer_contact_number" id="customer_contact_number{{$order->id}}" class="form-control" 
+                               value="{{ $order->customer_contact_number }}" required>
+                    </div>
+
                     {{-- Branch --}}
                     <div class="mb-3">
                         <label for="branch_id{{$order->id}}" class="form-label">Branch:<span class="text-danger">*</span></label>
@@ -88,8 +95,9 @@
         </div>
     </div>
 </div>
-{{-- Edit Order Modal End --}}
+{{-- Edit Order Modal --}}
 
+{{-- Scripts --}}
 @push('scripts')
 <script>
     document.querySelector('#editOrderBtn{{$order->id}}').addEventListener('click', function(){
@@ -99,10 +107,11 @@
     async function editOrder(orderId) {
         const customerName = document.getElementById(`customer_name${orderId}`).value.trim();
         const customerAddress = document.getElementById(`customer_address${orderId}`).value.trim();
+        const customerNumber = document.getElementById(`customer_contact_number${orderId}`).value.trim();
         const branchId = document.getElementById(`branch_id${orderId}`).value;
         const orderStatus = document.getElementById(`order_status${orderId}`).value;
 
-        if (!customerName || !customerAddress || !branchId) {
+        if (!customerName || !customerNumber || !branchId) {
             Swal.fire({
                 icon: 'error',
                 title: 'Error',

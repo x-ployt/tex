@@ -18,6 +18,7 @@ class Order extends Model
         'branch_id',
         'customer_name',
         'customer_address',
+        'customer_contact_number',
         'file_paths',
         'reason'
     ];

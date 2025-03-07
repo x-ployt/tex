@@ -25,26 +25,44 @@
     <div class="card-body">
 
         <div class="row">
+
+            {{-- Full Name --}}
             <div class="col-md-12">
                 <h6 class="font-weight-bold d-inline">Full Name:</h6>
                 <span class="text-dark" style="font-size: 15px;">{{ $user->name }}</span>
             </div>
+
+            {{-- Email --}}
             <div class="col-md-12 mt-2">
                 <h6 class="font-weight-bold d-inline">Email:</h6>
                 <span class="text-dark" style="font-size: 15px;">{{ $user->email }}</span>
             </div>
+
+            {{-- Username --}}
             <div class="col-md-12 mt-2">
                 <h6 class="font-weight-bold d-inline">Username:</h6>
                 <span class="text-dark" style="font-size: 15px;">{{ $user->username }}</span>
             </div>
+
+            {{-- Contact Number --}}
+            <div class="col-md-12 mt-2">
+                <h6 class="font-weight-bold d-inline">Contact Number:</h6>
+                <span class="text-dark" style="font-size: 15px;">{{ $user->contact_number }}</span>
+            </div>
+
+            {{-- Role --}}
             <div class="col-md-12 mt-2">
                 <h6 class="font-weight-bold d-inline">Role:</h6>
                 <span class="text-dark" style="font-size: 15px;">{{ $user->role->role_name }}</span>
             </div>
+
+            {{-- Branch --}}
             <div class="col-md-12 mt-2">
                 <h6 class="font-weight-bold d-inline">Branch:</h6>
                 <span class="text-dark" style="font-size: 15px;">{{ $user->branch->branch_name }}</span>
             </div>
+
+            {{-- Branch Address --}}
             <div class="col-md-12 mt-2">
                 <h6 class="font-weight-bold d-inline">Branch Address:</h6>
                 <span class="text-dark" style="font-size: 15px;">{{ $user->branch->branch_address }}</span>

@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Branch;
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
 class BulkOrderValidation extends FormRequest
@@ -26,13 +28,31 @@ class BulkOrderValidation extends FormRequest
             'orders.*.order_no' => 'required|string|unique:orders,order_no',
             'orders.*.customer_name' => 'required|string',
             'orders.*.customer_address' => 'required|string',
-            'orders.*.branch_id' => 'required|exists:branches,id',
+            'orders.*.customer_contact_number' => 'required|string|max:11;',
+            
+            // Validate branch_name and check if it exists in the branches table
+            'orders.*.branch_name' => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    if (!Branch::where('branch_name', $value)->exists()) {
+                        $fail("The branch name '{$value}' does not exist.");
+                    }
+                },
+            ],
+
+            // Validate rider_name and check if it exists in the users table
+            'orders.*.rider_name' => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    if (!User::where('name', $value)->exists()) {
+                        $fail("The rider name '{$value}' does not exist.");
+                    }
+                },
+            ],
+
             'orders.*.file_paths' => 'nullable|json',
             'orders.*.order_status' => 'required|string',
-            
-            // Validate the selected rider from the form
-            'assigned_user_id' => 'required|exists:users,id', 
         ];
-        
     }
+
 }

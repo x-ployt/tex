@@ -79,11 +79,9 @@ class OrderController extends Controller
     {
         $validated = $request->validate([
             'bulk_orders' => 'required|file|mimes:csv,txt',
-            'assigned_user_id' => 'required|exists:users,id',
         ]);
 
         $file = $request->file('bulk_orders');
-        $assignedUserId = $request->assigned_user_id; // Get selected rider ID
 
         // Read CSV file
         $data = array_map('str_getcsv', file($file->getRealPath()));
@@ -96,11 +94,13 @@ class OrderController extends Controller
 
         // Define a mapping from CSV column names to database fields
         $columnMap = [
-            'Order No' => 'order_no',
-            'Customer Name' => 'customer_name',
+            'Order No'         => 'order_no',
+            'Customer Name'    => 'customer_name',
             'Customer Address' => 'customer_address',
-            'Branch ID' => 'branch_id',
-            'Order Status' => 'order_status',
+            'Customer Number'  => 'customer_contact_number',
+            'Branch Name'      => 'branch_name', // Changed from 'Branch ID' to 'Branch Name'
+            'Rider Name'       => 'rider_name',  // New column to get user_id from users table
+            'Order Status'     => 'order_status',
         ];
 
         // Check if headers match expected values
@@ -110,9 +110,7 @@ class OrderController extends Controller
             }
         }
 
-        $orders = [];
         $orderHistories = [];
-        $duplicateOrders = [];
 
         foreach ($data as $row) {
             $mappedRow = [];
@@ -126,19 +124,29 @@ class OrderController extends Controller
                 return back()->withErrors(['error' => 'Error: CSV format issue. Please check the file.']);
             }
 
-            // Check if order_no already exists
-            if (Order::where('order_no', $mappedRow['order_no'])->exists()) {
-                $duplicateOrders[] = $mappedRow['order_no'];
-                continue; // Skip duplicate order numbers
+            // Find the branch ID based on branch name
+            $branch = Branch::where('branch_name', $mappedRow['branch_name'])->first();
+            if (!$branch) {
+                return back()->withErrors(['error' => "Error: Branch '{$mappedRow['branch_name']}' not found in the system."]);
             }
+            $mappedRow['branch_id'] = $branch->id; // Replace branch_name with branch_id
+            unset($mappedRow['branch_name']);
 
-            // Assign selected rider
-            $mappedRow['assigned_user_id'] = $assignedUserId;
+            // Find the user ID based on rider name
+            $user = User::where('name', $mappedRow['rider_name'])->first();
+            if (!$user) {
+                return back()->withErrors(['error' => "Error: Rider '{$mappedRow['rider_name']}' not found in the system."]);
+            }
+            $mappedRow['assigned_user_id'] = $user->id; // Replace rider_name with assigned_user_id
+            unset($mappedRow['rider_name']);
 
-            // Create order record and store ID
-            $order = Order::create($mappedRow);
+            // Create or update the order
+            $order = Order::updateOrCreate(
+                ['order_no' => $mappedRow['order_no']], // Find existing order by order_no
+                $mappedRow // Update or create with this data
+            );
 
-            // Create order history entry
+            // Create order history entry for every update or create
             $orderHistories[] = [
                 'order_id' => $order->id,
                 'order_status' => $order->order_status,
@@ -152,14 +160,7 @@ class OrderController extends Controller
             OrderHistory::insert($orderHistories);
         }
 
-        // Return appropriate response
-        if (!empty($duplicateOrders)) {
-            return back()->withErrors([
-                'duplicate_orders' => 'Error: Duplicate order numbers found in the file: ' . implode(', ', $duplicateOrders),
-            ]);
-        }
-
-        return back()->with('addSuccess', 'Bulk orders uploaded successfully.');
+        return back()->with('addSuccess', 'Bulk orders processed successfully.');
     }
 
 
