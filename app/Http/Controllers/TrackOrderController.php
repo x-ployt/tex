@@ -22,6 +22,7 @@ class TrackOrderController extends Controller
             'history' => $order->orderHistory->map(function ($history) {
                 return [
                     'order_status' => $history->order_status,
+                    'delivery_remarks' => $history->delivery_remarks,
                     'updated_at' => $history->updated_at->format('Y-m-d H:i:s')
                 ];
             })

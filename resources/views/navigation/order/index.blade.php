@@ -28,9 +28,14 @@
         <thead>
             <tr>
                 <th>Order No.</th>
-                <th>Customer Name</th>
+                @if (Auth::user()->role->role_name === 'SuperAdmin')
                 <th>Branch</th>
+                @endif
+                <th>Customer Name</th>
                 <th>Address</th>
+                <th>Contact Number</th>
+                <th>Amount</th>
+                <th>MOP</th>
                 <th>Assigned Rider</th>
                 <th>Status</th>
                 <th class="action" style="width: 50px;">Action</th>
@@ -40,13 +45,18 @@
             @foreach ($orders as $order)
                 <tr>
                     <td>{{ $order->order_no }}</td>
+                    @if (Auth::user()->role->role_name === 'SuperAdmin')
                     <td>{{ $order->branch->branch_name }}</td>
+                    @endif
                     <td>{{ $order->customer_name }}</td>
                     <td>{{ $order->customer_address }}</td>
+                    <td>{{ $order->customer_contact_number }}</td>
+                    <td>{{ number_format($order->order_amount, 2) }}</td>
+                    <td>{{ $order->order_mop }}</td>
                     <td>{{ $order->assignedUser->name }}</td>
                     <td>   
                         <span class="badge 
-                            @if($order->order_status === 'Processing') bg-warning 
+                            @if($order->order_status === 'Re-Schedule Delivery') bg-warning 
                             @elseif($order->order_status === 'For Delivery') bg-primary 
                             @elseif($order->order_status === 'Delivered') bg-success 
                             @elseif($order->order_status === 'Cancelled') bg-danger 
@@ -68,16 +78,64 @@
 {{-- Scripts --}}
 @push('scripts')
 
-<script type="module">
-    new DataTable('#data_table', {
-        columnDefs: [
-            {orderable: false, targets: [6]},
-            {width: "auto", targets: '_all'},
-            {className: 'text-center', targets: '_all' }
-        ],
-        fixedHeader: true,
+@if (Auth::user()->role->role_name === 'SuperAdmin')
+<script>
+    $(document).ready(function() {
+        new DataTable('#data_table', {
+            columnDefs: [
+                { orderable: false, targets: [9] }, 
+                { width: "auto", targets: '_all' },
+                { className: 'text-center', targets: '_all' }
+            ],
+            fixedHeader: true,
+            layout: {
+                topStart: {
+                    buttons: [
+                        {
+                            extend: 'excel',
+                            text: 'Export as excel',
+                            className: 'btn btn-sm btn-primary', 
+                            exportOptions: {
+                                modifier: { page: 'current' },
+                                columns: ':not(:last-child)' 
+                            }
+                        }
+                    ]
+                }
+            },
+        });
     });
 </script>
+
+@else 
+<script>
+    $(document).ready(function() {
+        new DataTable('#data_table', {
+            columnDefs: [
+                { orderable: false, targets: [8] },
+                { width: "auto", targets: '_all' },
+                { className: 'text-center', targets: '_all' }
+            ],
+            fixedHeader: true,
+            layout: {
+                topStart: {
+                    buttons: [
+                        {
+                            extend: 'excel',
+                            text: 'Export as excel',
+                            className: 'btn btn-sm btn-primary', 
+                            exportOptions: {
+                                modifier: { page: 'current' },
+                                columns: ':not(:last-child)' 
+                            }
+                        }
+                    ]
+                }
+            },
+        });
+    });
+</script>
+@endif
 
 @endpush
 @endsection

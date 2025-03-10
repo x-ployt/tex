@@ -72,7 +72,8 @@ Route::middleware(['auth', 'RiderOnly'])->group(function () {
         Route::get('/{order}', [DeliveryController::class, 'view'])->name('delivery.view');
         Route::put('/{order}/delivered', [DeliveryController::class, 'markDelivered'])->name('order.markDelivered');
         Route::put('/{order}/cancelled', [DeliveryController::class, 'markCancelled'])->name('order.markCancelled');
-        
+        Route::put('/delivery/{order}/reschedule', [DeliveryController::class, 'markReschedule'])->name('delivery.reschedule');
+
     });
     
 });

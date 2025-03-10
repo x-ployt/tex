@@ -19,6 +19,8 @@ class Order extends Model
         'customer_name',
         'customer_address',
         'customer_contact_number',
+        'order_amount',
+        'order_mop',
         'file_paths',
         'reason'
     ];

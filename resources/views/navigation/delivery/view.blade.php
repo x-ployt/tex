@@ -35,22 +35,22 @@
                 <span class="text-dark" style="font-size: 15px;">{{ $order->customer_address }}</span>
             </div>
             <div class="col-md-12 mt-2">
-                <h6 class="font-weight-bold d-inline">Customer Number:</h6>
+                <h6 class="font-weight-bold d-inline">Contact Number:</h6>
                 <span class="text-dark" style="font-size: 15px;">{{ $order->customer_contact_number }}</span>
             </div>
             <div class="col-md-12 mt-2">
-                <h6 class="font-weight-bold d-inline">Branch:</h6>
-                <span class="text-dark" style="font-size: 15px;">{{ $order->branch->branch_name }}</span>
+                <h6 class="font-weight-bold d-inline">Amount:</h6>
+                <span class="text-dark" style="font-size: 15px;">{{ number_format($order->order_amount, 2) }}</span>
             </div>
             <div class="col-md-12 mt-2">
-                <h6 class="font-weight-bold d-inline">Assigned Rider:</h6>
-                <span class="text-dark" style="font-size: 15px;">{{ $order->assignedUser->name ?? 'Not Assigned' }}</span>
+                <h6 class="font-weight-bold d-inline">Mode of Payment</h6>
+                <span class="text-dark" style="font-size: 15px;">{{ $order->order_mop }}</span>
             </div>
             <div class="col-md-12 mt-2">
                 <h6 class="font-weight-bold d-inline">Order Status:</h6>
                 <span class="badge 
-                    @if($order->order_status === 'Processing') bg-warning 
-                    @elseif($order->order_status === 'For Delivery') bg-primary 
+                    @if($order->order_status === 'For Delivery') bg-primary 
+                    @elseif($order->order_status === 'Re-Schedule Delivery') bg-orange 
                     @elseif($order->order_status === 'Delivered') bg-success 
                     @elseif($order->order_status === 'Cancelled') bg-danger 
                     @endif">
@@ -94,6 +94,7 @@
         <div class="d-flex gap-1 justify-content-end">
 
             @include('navigation.delivery.delivered')
+            @include('navigation.delivery.re-schedule')
             @include('navigation.delivery.cancelled')
             
             
