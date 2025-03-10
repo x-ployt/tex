@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('customer_name');
             $table->string('customer_address');
             $table->string('customer_contact_number');
+            $table->string('order_amount');
+            $table->string('order_mop');
             $table->foreignId('assigned_user_id')->constrained('users');
             $table->foreignId('branch_id')->constrained('branches');
             $table->json('file_paths')->nullable();

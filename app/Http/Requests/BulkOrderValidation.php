@@ -29,6 +29,8 @@ class BulkOrderValidation extends FormRequest
             'orders.*.customer_name' => 'required|string',
             'orders.*.customer_address' => 'required|string',
             'orders.*.customer_contact_number' => 'required|string|max:11;',
+            'orders.*.order_amount' => 'required|string',
+            'orders.*.order_mop' => 'required|string',
             
             // Validate branch_name and check if it exists in the branches table
             'orders.*.branch_name' => [

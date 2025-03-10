@@ -21,7 +21,7 @@
             <div class="row">
                 @foreach ($orders as $order)
                     @php
-                        if($order->order_status === 'Processing'){
+                        if($order->order_status === 'Re-Schedule Delivery'){
                             $bg = 'bg-orange';
                         } elseif($order->order_status === 'For Delivery'){
                             $bg = 'bg-primary';
@@ -46,19 +46,23 @@
                                     </p>
                                     <ul class="ml-4 mb-0 fa-ul text-muted">
                                         <li class="small">
-                                            <span class="fa-li"><i class="fas fa-lg fa-user"></i></span> 
-                                            Assigned Rider: {{ $order->assignedUser->name ?? 'Unassigned' }}
+                                            <span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> 
+                                            Contact Number {{ $order->customer_contact_number }}
                                         </li>
                                         <li class="small">
-                                            <span class="fa-li"><i class="fas fa-lg fa-map-marker-alt"></i></span> 
-                                            Branch: {{ $order->branch->branch_name ?? 'N/A' }}
+                                            <span class="fa-li"><i class="fas fa-lg fa-peso-sign"></i></span> 
+                                            Amount: {{ number_format($order->order_amount, 2) }}
+                                        </li>
+                                        <li class="small">
+                                            <span class="fa-li"><i class="fas fa-lg fa-handshake-angle"></i></span> 
+                                            Mode of Payment: {{ $order->order_mop }}
                                         </li>
                                         <li class="small">
                                             <span class="fa-li"><i class="fas fa-lg fa-box"></i></span> 
                                             Status: {{ ucfirst($order->order_status) }}
                                         </li>
                                         <li class="small">
-                                            <span class="fa-li"><i class="fas fa-lg fa-box"></i></span> 
+                                            <span class="fa-li"><i class="fas fa-lg fa-calendar"></i></span> 
                                             Date: {{ date("D, M j, Y", strtotime($order->created_at)) }}
                                         </li>
                                     </ul>

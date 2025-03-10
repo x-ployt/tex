@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('order_id')->constrained('orders');
             $table->string('order_status');
+            $table->string('delivery_remarks')->nullable();
             $table->timestamps();
         });
     }

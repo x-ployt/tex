@@ -69,7 +69,8 @@ class OrderController extends Controller
         // Insert an entry into OrderHistory
         OrderHistory::create([
             'order_id' => $order->id,
-            'order_status' => $order->order_status
+            'order_status' => $order->order_status,
+            'delivery_remarks' => 'Order is out for delivery'
         ]);
 
         return redirect()->route('order.create')->with('addSuccess', 'Order created successfully.');
@@ -97,7 +98,9 @@ class OrderController extends Controller
             'Order No'         => 'order_no',
             'Customer Name'    => 'customer_name',
             'Customer Address' => 'customer_address',
-            'Customer Number'  => 'customer_contact_number',
+            'Contact Number'  => 'customer_contact_number',
+            'Amount'  => 'order_amount',
+            'MOP'  => 'order_mop',
             'Branch Name'      => 'branch_name', // Changed from 'Branch ID' to 'Branch Name'
             'Rider Name'       => 'rider_name',  // New column to get user_id from users table
             'Order Status'     => 'order_status',
@@ -146,10 +149,14 @@ class OrderController extends Controller
                 $mappedRow // Update or create with this data
             );
 
+            // Default delivery remarks for "For Delivery" status
+            $deliveryRemarks = ($order->order_status === "For Delivery") ? "Order is out for delivery" : null;
+
             // Create order history entry for every update or create
             $orderHistories[] = [
                 'order_id' => $order->id,
                 'order_status' => $order->order_status,
+                'delivery_remarks' => $deliveryRemarks, // Add remarks if applicable
                 'created_at' => now(),
                 'updated_at' => now(),
             ];

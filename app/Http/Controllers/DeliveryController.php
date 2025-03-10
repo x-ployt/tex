@@ -70,7 +70,7 @@ class DeliveryController extends Controller
         ]);
 
         OrderHistory::updateOrCreate(
-            ['order_id' => $order->id, 'order_status' => 'Delivered']
+            ['order_id' => $order->id, 'order_status' => 'Delivered', 'delivery_remarks' => 'Order has been delivered.']
         );
         
 
@@ -86,16 +86,41 @@ class DeliveryController extends Controller
         $order->update([
             'order_status' => 'Cancelled',
             // Assuming you have a column "cancel_reason" in your orders table
-            'reason' => $request->reason,
+            'reason' => $request->reason
         ]);
 
         OrderHistory::updateOrCreate(
-            ['order_id' => $order->id, 'order_status' => 'Cancelled']
+            ['order_id' => $order->id, 'order_status' => 'Cancelled', 'delivery_remarks' => $order->reason]
         );
         
 
         return redirect()->route('delivery.view', $order)
                          ->with('updateSuccess', 'Order marked as cancelled.');
+    }
+
+    /**
+     * Re-schedule delivery for an order
+     */
+    public function markReschedule(Request $request, Order $order)
+    {
+        $request->validate([
+            'delivery_remarks' => 'required|in:Customer Cannot be reached,Customer Refused to Accept the parcel,Customer Re-scheduled the delivery,Payment is not ready,Rider Cannot locate the address (incomplete)'
+        ]);
+
+        // Update order status
+        $order->update([
+            'order_status' => 'Re-Schedule Delivery',
+        ]);
+
+        // Store the reschedule reason in Order History
+        OrderHistory::create([
+            'order_id' => $order->id,
+            'order_status' => 'Re-Schedule Delivery',
+            'delivery_remarks' => $request->delivery_remarks,
+        ]);
+
+        return redirect()->route('delivery.view', $order)
+                        ->with('updateSuccess', 'Order marked as Re-Schedule Delivery.');
     }
 
 }

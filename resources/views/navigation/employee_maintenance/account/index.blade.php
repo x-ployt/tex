@@ -51,7 +51,7 @@
 {{-- Scripts --}}
 @push('scripts')
 
-<script type="module">
+<script>
     new DataTable('#data_table', {
         columnDefs: [
             {orderable: false, targets: [5]},

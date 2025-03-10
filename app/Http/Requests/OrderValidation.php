@@ -27,6 +27,8 @@ class OrderValidation extends FormRequest
                 'customer_name' => 'required|string',
                 'customer_address' => 'required|string',
                 'customer_contact_number' => 'required|string|max:11',
+                'order_amount' => 'required|string',
+                'order_mop' => 'required|string',
                 'assigned_user_id' => 'required|exists:users,id',
                 'branch_id' => 'required|exists:branches,id',
                 'file_paths' => 'nullable|json',

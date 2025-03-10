@@ -63,6 +63,30 @@
                 autocomplete="off" required>
             </div>
 
+           {{-- Order Amount --}}
+            <div class="mb-3">
+                <label for="order_amount">Order Amount<span class="text-danger">*</span></label>
+                <input type="text" name="order_amount" id="order_amount" class="form-control" 
+                    placeholder="Enter Order Amount" 
+                    pattern="^\d+(\.\d{1,2})?$"
+                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/^(\d*\.\d{2}).*$/, '$1').replace(/^(\d*\.\d*)\./, '$1');"
+                    value="{{ old('order_amount') }}" 
+                    autocomplete="off" required>
+            </div>
+
+            {{-- Order Mode of Payment --}}
+            <div class="mb-3">
+                <label for="order_mop" class="form-label">Order Status:</label>
+                <select name="order_mop" id="order_mop" class="form-control">
+                    <option value="COD" selected>COD</option>
+                    <option value="GCASH">GCASH</option>
+                    <option value="Remittance">Remittance</option>
+                    <option value="Bank">Bank</option>
+                    <option value="Credit/Debit Card">Credit/Debit Card</option>
+                    <option value="Xendit">Xendit</option>
+                </select>
+            </div>
+
             {{-- Delivery Rider --}}
             <div class="mb-3">
                 <label>Assigned Delivery Rider:</label>
@@ -91,7 +115,6 @@
             <div class="mb-3">
                 <label for="order_status" class="form-label">Order Status:</label>
                 <select name="order_status" id="order_status" class="form-control">
-                    <option value="Processing">Processing</option>
                     <option value="For Delivery" selected>For Delivery</option>
                     <option value="Delivered">Delivered</option>
                     <option value="Cancelled">Cancelled</option>
