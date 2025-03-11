@@ -59,7 +59,7 @@
 
         .tracking-line i {
             font-size: 22px; 
-            color: #4CAF50; /* Green for delivered */
+            color: #4CAF50; 
         }
 
         /* Status and Remarks Column */
@@ -100,7 +100,7 @@
 <body>
     <div class="container">
         <div class="tracking-container">
-            <h4 class="text-center mb-3">Track Your Order</h4>
+            <h4 class="text-center mb-3">Track your Salveo Barley Grass Order</h4>
     
             <form id="trackOrderForm">
                 <input type="hidden" id="csrf_token" value="{{ csrf_token() }}">

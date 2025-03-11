@@ -26,7 +26,7 @@
             <aside id="sideBar" class="main-sidebar sidebar-dark-primary elevation-4">
                 <p href="{{route('dashboard')}}" class="brand-link logo-switch" style="background-color: #4CAF50; color: white;">
                     <i class="fa-solid fa-fw fa-box fa-lg" style="color: #fda720"></i>
-                    <span class="brand-text fw-bold">Order Tracker</span>
+                    <span class="brand-text fw-bold">TEX</span>
                 </p>   
 
                 <div class="sidebar" style="background-color:#4CAF50;">

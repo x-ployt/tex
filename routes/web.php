@@ -19,7 +19,7 @@ Route::get('/salveowell-login', function () {
 
 Route::middleware('auth')->group(function () {
 
-    Route::get('/salveowell-dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
+    Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
 
     Route::put('/change-password/{user}', [AuthController::class, 'changePassword'])->name('changePassword');
 
@@ -67,7 +67,7 @@ Route::middleware(['auth', 'AdminOnly'])->group(function () {
 
 Route::middleware(['auth', 'RiderOnly'])->group(function () {
 
-    Route::prefix('salveowell-deliveries')->group(function () {
+    Route::prefix('deliveries')->group(function () {
         Route::get('/', [DeliveryController::class, 'index'])->name('delivery.index');
         Route::get('/{order}', [DeliveryController::class, 'view'])->name('delivery.view');
         Route::put('/{order}/delivered', [DeliveryController::class, 'markDelivered'])->name('order.markDelivered');

@@ -34,8 +34,6 @@ class OrderController extends Controller
         return view('navigation.order.index', compact('orders'));
     }
 
-    
-
     public function create()
     {
         $authUser = Auth::user();

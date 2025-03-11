@@ -4,7 +4,7 @@
 
     // Define button colors based on status
     $statusColors = [
-        'Processing' => 'btn-warning',
+        'Re-Schedule Delivery' => 'btn-warning',
         'For Delivery' => 'btn-primary',
         'Delivered' => 'btn-success',
         'Cancelled' => 'btn-danger',
