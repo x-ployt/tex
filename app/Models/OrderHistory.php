@@ -18,7 +18,7 @@ class OrderHistory extends Model
     ];
 
     /**
-     * Connect with order table
+     * Connect with orders table
      */
 
     public function order()

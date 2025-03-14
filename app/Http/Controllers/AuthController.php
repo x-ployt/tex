@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Hash;
 class AuthController extends Controller
 {
     /**
-     * Redirect to the dashboard.
+     * Redirection to dashboard.
      */
     public function dashboard()
     {
@@ -20,7 +20,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Handle user password change.
+     * Function to change password
      */
     public function changePassword(Request $request, User $user)
     {
@@ -37,7 +37,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Handle user logout.
+     * Function to logout
      */
     public function logout()
     {

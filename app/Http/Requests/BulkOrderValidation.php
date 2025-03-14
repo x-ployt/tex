@@ -25,6 +25,7 @@ class BulkOrderValidation extends FormRequest
     {
         return [
             'orders' => 'required|array',
+            'orders.*.order_date' => 'required|string',
             'orders.*.order_no' => 'required|string|unique:orders,order_no',
             'orders.*.customer_name' => 'required|string',
             'orders.*.customer_address' => 'required|string',

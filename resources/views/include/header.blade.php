@@ -7,7 +7,7 @@
     </li>
 </ul>
 
-{{-- RIGHT NAVBAR LINKS --}}
+{{-- Right Navbar --}}
 <ul class="navbar-nav ms-auto">
     {{-- Message Dropdown --}}
     <li class="nav-item dropdown">

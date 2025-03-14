@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class BranchController extends Controller
 {
     /**
-     * Redirect to the branch page.
+     * Redirect to branch.index
      */
     public function index()
     {
@@ -18,14 +18,14 @@ class BranchController extends Controller
     }
 
     /**
-     * View branch
+     * Redirect to branch.view
      */
     public function view(Branch $branch) {
         return view('navigation.branch.view', compact('branch'));
     }
 
     /**
-     * Add branch
+     * Function to create a branch
      */
     public function addBranch(BranchValidation $request)
     {
@@ -35,7 +35,7 @@ class BranchController extends Controller
     }
 
     /**
-     * Update branch
+     * Function to update a branch
      */
     public function updateBranch(BranchValidation $request, Branch $branch)
     {

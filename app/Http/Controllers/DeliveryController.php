@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Auth;
 
 class DeliveryController extends Controller
 {
+    /**
+     * Redirecting to delivery.index
+     */
     public function index(Request $request)
     {
         $query = Order::where('branch_id', Auth::user()->branch_id)
@@ -27,6 +30,9 @@ class DeliveryController extends Controller
         return view('navigation.delivery.index', compact('orders'));
     }
 
+    /**
+     * Redirecting to delivery.view
+     */
     public function view(Order $order)
     {
         $authUser = Auth::user();
@@ -51,6 +57,9 @@ class DeliveryController extends Controller
         return view('navigation.delivery.view', compact('order', 'branches', 'riders'));
     }
 
+    /**
+     * Function to mark the order as "Delivered"
+     */
     public function markDelivered(DeliveryValidation $request, Order $order)
     {
         $files = $request->file('delivery_photos');
@@ -79,13 +88,12 @@ class DeliveryController extends Controller
     }
 
     /**
-     * Mark an order as cancelled.
+     * Function to mark the order as "Cancelled"
      */
     public function markCancelled(DeliveryValidation $request, Order $order)
     {
         $order->update([
             'order_status' => 'Cancelled',
-            // Assuming you have a column "cancel_reason" in your orders table
             'reason' => $request->reason
         ]);
 
@@ -93,13 +101,12 @@ class DeliveryController extends Controller
             ['order_id' => $order->id, 'order_status' => 'Cancelled', 'delivery_remarks' => $order->reason]
         );
         
-
         return redirect()->route('delivery.view', $order)
                          ->with('updateSuccess', 'Order marked as cancelled.');
     }
 
     /**
-     * Re-schedule delivery for an order
+     * Function to mark the order as "Re-Schedule Delivery"
      */
     public function markReschedule(Request $request, Order $order)
     {
@@ -112,7 +119,7 @@ class DeliveryController extends Controller
             'order_status' => 'Re-Schedule Delivery',
         ]);
 
-        // Store the reschedule reason in Order History
+        // Store the reschedule remarks in Order History
         OrderHistory::create([
             'order_id' => $order->id,
             'order_status' => 'Re-Schedule Delivery',

@@ -16,7 +16,7 @@ class Role extends Model
     ];
 
     /**
-     * Connect with user table
+     * Connect with users table
      */
     public function users() {
         return $this->hasMany(User::class);

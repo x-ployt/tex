@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
+    /**
+     * Redirecting to order.index
+     */
     public function index(Request $request)
     {
         $authUser = Auth::user();
@@ -34,6 +37,9 @@ class OrderController extends Controller
         return view('navigation.order.index', compact('orders'));
     }
 
+    /**
+     * Redirecting to order.create
+     */
     public function create()
     {
         $authUser = Auth::user();
@@ -59,12 +65,15 @@ class OrderController extends Controller
         return view('navigation.order.create', compact('riders', 'branches'));
     }
 
+    /**
+     * Function for creating single order
+     */
     public function store(OrderValidation $request)
     {
-        // Create the order
+        // Create order
         $order = Order::create($request->validated());
 
-        // Insert an entry into OrderHistory
+        // Create order history
         OrderHistory::create([
             'order_id' => $order->id,
             'order_status' => $order->order_status,
@@ -74,6 +83,9 @@ class OrderController extends Controller
         return redirect()->route('order.create')->with('addSuccess', 'Order created successfully.');
     }
 
+    /**
+     * Function for creating bulk orders
+     */
     public function bulkStore(Request $request)
     {
         $validated = $request->validate([
@@ -93,6 +105,7 @@ class OrderController extends Controller
 
         // Define a mapping from CSV column names to database fields
         $columnMap = [
+            'Order Date'         => 'order_date',
             'Order No'         => 'order_no',
             'Customer Name'    => 'customer_name',
             'Customer Address' => 'customer_address',
@@ -154,7 +167,7 @@ class OrderController extends Controller
             $orderHistories[] = [
                 'order_id' => $order->id,
                 'order_status' => $order->order_status,
-                'delivery_remarks' => $deliveryRemarks, // Add remarks if applicable
+                'delivery_remarks' => $deliveryRemarks,
                 'created_at' => now(),
                 'updated_at' => now(),
             ];
@@ -168,7 +181,9 @@ class OrderController extends Controller
         return back()->with('addSuccess', 'Bulk orders processed successfully.');
     }
 
-
+    /**
+     * Redirecting to view $order
+     */
     public function view(Order $order)
     {
         $authUser = Auth::user();
@@ -193,13 +208,20 @@ class OrderController extends Controller
         return view('navigation.order.view', compact('order', 'branches', 'riders'));
     }
 
+    /**
+     * Function to update order
+     */
     public function update(OrderValidation $request, Order $order)
     {
-        // Capture previous order status before updating
+        // Check previous order status before updating
         $previousStatus = $order->order_status;
 
-        // Update order with new data
+        // Update order
         $order->update($request->validated());
+
+        if ($request->order_status == 'For Delivery') {
+            $deliveryRemarks = 'Out for Delivery';
+        }
 
         // Check if the order status has changed
         if ($previousStatus !== $order->order_status) {
@@ -207,13 +229,16 @@ class OrderController extends Controller
             OrderHistory::create([
                 'order_id' => $order->id,
                 'order_status' => $order->order_status,
+                'delivery_remarks' => $deliveryRemarks
             ]);
         }
 
         return redirect()->back()->with('updateSuccess', 'Order updated successfully.');
     }
 
-
+    /**
+     * Function to delete order
+     */
     public function destroy(Order $order)
     {
         $order->delete();

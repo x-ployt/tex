@@ -24,6 +24,7 @@ class OrderValidation extends FormRequest
         if  ($this->method() === 'POST') {
             return [
                 'order_no' => 'required|string|unique:orders,order_no',
+                'order_date' => 'required|string',
                 'customer_name' => 'required|string',
                 'customer_address' => 'required|string',
                 'customer_contact_number' => 'required|string|max:11',
@@ -38,9 +39,12 @@ class OrderValidation extends FormRequest
         } elseif ($this->method() === 'PUT') {
             return [
                 'order_no' => 'required|string|unique:orders,order_no,' . $this->route('order')->id,
+                'order_date' => 'required|string',
                 'customer_name' => 'required|string',
                 'customer_address' => 'required|string',
                 'customer_contact_number' => 'required|string|max:11',
+                'order_amount' => 'required|string',
+                'order_mop' => 'required|string',
                 'assigned_user_id' => 'required|exists:users,id',
                 'branch_id' => 'required|exists:branches,id',
                 'file_paths' => 'nullable|json',

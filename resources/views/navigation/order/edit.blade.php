@@ -19,6 +19,12 @@
                 {{-- Modal Body --}}
                 <div class="modal-body">
 
+                     {{-- Order Date --}}
+                    <div class="mb-3">
+                        <label for="order_date{{$order->id}}" class="form-label">Order Date:<span class="text-danger">*</span></label>
+                        <input type="text" name="order_date" id="order_date{{$order->id}}" class="form-control" value="{{$order->order_date}}" required>
+                    </div>
+
                     {{-- Order No --}}
                     <div class="mb-3">
                         <label for="order_no{{$order->id}}" class="form-label">Order No:<span class="text-danger">*</span></label>
@@ -44,8 +50,32 @@
                     <div class="mb-3">
                         <label for="customer_contact_number{{$order->id}}" class="form-label">Contact Number:<span class="text-danger">*</span></label>
                         <input type="text" name="customer_contact_number" id="customer_contact_number{{$order->id}}" class="form-control" 
-                               value="{{ $order->customer_contact_number }}" required>
+                            value="{{ old('customer_contact_number', $order->customer_contact_number) }}" required>
                     </div>
+
+                    {{-- Order Amount --}}
+                    <div class="mb-3">
+                        <label for="order_amount{{$order->id}}" class="form-label">Order Amount<span class="text-danger">*</span></label>
+                        <input type="text" name="order_amount" id="order_amount{{$order->id}}" class="form-control" 
+                            placeholder="Enter Order Amount" 
+                            pattern="^\d+(\.\d{1,2})?$"
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/^(\d*\.\d{2}).*$/, '$1');"
+                            value="{{ old('order_amount', $order->order_amount) }}" 
+                            autocomplete="off" required>
+                    </div>
+
+                    {{-- Order Mode of Payment --}}
+                    <div class="mb-3">
+                        <label for="order_mop{{$order->id}}" class="form-label">Mode of Payment:<span class="text-danger">*</span></label>
+                        <select name="order_mop" id="order_mop{{$order->id}}" class="form-control">
+                            @foreach(['COD', 'GCASH', 'Remittance', 'Bank', 'Credit/Debit Card', 'Xendit'] as $mop)
+                                <option value="{{ $mop }}" {{ old('order_mop', $order->order_mop) == $mop ? 'selected' : '' }}>
+                                    {{ $mop }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
 
                     {{-- Branch --}}
                     <div class="mb-3">
@@ -98,19 +128,30 @@
 
 {{-- Scripts --}}
 @push('scripts')
+
+{{-- DatePicker --}}
+<script>
+    $(document).ready(function() {
+        $("#order_date{{$order->id}}").datepicker({
+            dateFormat: "yy-mm-dd"
+        });
+    });
+</script>
+
 <script>
     document.querySelector('#editOrderBtn{{$order->id}}').addEventListener('click', function(){
         $('#editOrder{{$order->id}}').modal('show');
     });
 
     async function editOrder(orderId) {
+        const orderDate = document.getElementById(`order_date${orderId}`).value.trim();
         const customerName = document.getElementById(`customer_name${orderId}`).value.trim();
         const customerAddress = document.getElementById(`customer_address${orderId}`).value.trim();
         const customerNumber = document.getElementById(`customer_contact_number${orderId}`).value.trim();
         const branchId = document.getElementById(`branch_id${orderId}`).value;
         const orderStatus = document.getElementById(`order_status${orderId}`).value;
 
-        if (!customerName || !customerNumber || !branchId) {
+        if (!orderDate || !customerName || !customerNumber || !branchId) {
             Swal.fire({
                 icon: 'error',
                 title: 'Error',

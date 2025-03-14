@@ -48,6 +48,13 @@
                         maxlength="50" required>
                         <x-error-message field="email"/>
                     </div>
+
+                    {{-- Contact Number --}}
+                    <div class="mb-3">
+                        <label for="contact_number{{$user->id}}" class="form-label">Contact Number:<span class="text-danger">*</span></label>
+                        <input type="text" name="contact_number" id="contact_number{{$user->id}}" class="form-control" 
+                            value="{{ old('contact_number', $user->contact_number) }}" required>
+                    </div>
                     
                     {{-- Branch Name --}}
                     <div class="mb-3">
@@ -108,6 +115,7 @@
         const name = document.getElementById('name{{$user->id}}').value.trim();
         const username = document.getElementById('username{{$user->id}}').value.trim();
         const email = document.getElementById('email{{$user->id}}').value.trim();
+        const contact_number = document.getElementById('contact_number{{$user->id}}').value.trim();
         const branch_id = document.getElementById('branch_id{{$user->id}}').value.trim();
         const role_id = document.getElementById('role_id{{$user->id}}').value.trim();
 
@@ -148,6 +156,18 @@
             return;
         }
 
+        if (!contact_number) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Please enter contact number',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                allowEnterKey: false
+            });
+            return;
+        }
+    
         if (!branch_id) {
             Swal.fire({
                 icon: 'error',

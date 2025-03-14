@@ -21,20 +21,33 @@
             <div class="row">
                 @foreach ($orders as $order)
                     @php
-                        if($order->order_status === 'Re-Schedule Delivery'){
+                        $orderDate = strtotime($order->order_date);
+                        $currentDate = strtotime(now());
+                        $dateDiff = floor(($currentDate - $orderDate) / (60 * 60 * 24));
+                        
+                        if($dateDiff >= 3) {
+                            $bg = 'bg-warning';
+                        } elseif($order->order_status === 'Re-Schedule Delivery') {
                             $bg = 'bg-orange';
-                        } elseif($order->order_status === 'For Delivery'){
+                        } elseif($order->order_status === 'For Delivery') {
                             $bg = 'bg-primary';
-                        } elseif($order->order_status === 'Delivered'){
+                        } elseif($order->order_status === 'Delivered') {
                             $bg = 'bg-success';
-                        } elseif($order->order_status === 'Cancelled'){
+                        } elseif($order->order_status === 'Cancelled') {
                             $bg = 'bg-danger';
                         } else {
                             $bg = '';
                         }
                     @endphp
                     <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
-                        <div class="card bg-light d-flex flex-fill">
+                        <div class="card bg-light d-flex flex-fill position-relative">
+                            @if ($dateDiff >= 3)
+                                <div class="ribbon-wrapper ribbon-lg">
+                                    <div class="ribbon bg-danger text-md">
+                                        {{ $dateDiff }} Days Due
+                                    </div>
+                                </div>
+                            @endif
                             <div class="card-header {{ $bg }} border-bottom-0">
                                     Order # {{ $order->order_no }}
                             </div>
@@ -63,13 +76,10 @@
                                         </li>
                                         <li class="small">
                                             <span class="fa-li"><i class="fas fa-lg fa-calendar"></i></span> 
-                                            Date: {{ date("D, M j, Y", strtotime($order->created_at)) }}
+                                            Order Date: {{ date("D, M j, Y", $orderDate) }}
                                         </li>
                                     </ul>
                                 </div>
-                                    {{-- <div class="col-5 text-center">
-                                        <img src="{{ asset('path_to_default_order_image.jpg') }}" alt="Order Image" class="img-circle img-fluid">
-                                    </div> --}}
                             </div>
                             <div class="card-footer">
                                 <div class="text-right">
