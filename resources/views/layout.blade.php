@@ -44,7 +44,7 @@
             {{-- Footer --}}
             <footer class="main-footer">
                 <div class="float-right d-none d-sm-inline">v1</div>
-                <strong>Copyright © 2025 | <a>Salveowell Order Tracker</a></strong> | All rights reserved.
+                <strong>Copyright © 2025 | <a>TEX Tracking System</a></strong> | All rights reserved.
             </footer>
         </div>
 

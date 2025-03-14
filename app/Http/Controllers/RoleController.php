@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class RoleController extends Controller
 {
     /**
-     * Redirect to the role page.
+     * Redirect to role.index
      */
     public function index()
     {
@@ -18,14 +18,14 @@ class RoleController extends Controller
     }
 
     /**
-     * View role
+     * Redirect to role.view
      */
     public function view(Role $branch) {
         return view('navigation.role.view', compact('role'));
     }
 
     /**
-     * Add role
+     * Function to create a role
      */
     public function addRole(RoleValidation $request)
     {
@@ -35,7 +35,7 @@ class RoleController extends Controller
     }
 
     /**
-     * Update role
+     * Function to update a role
      */
     public function updateRole(RoleValidation $request, Role $role)
     {

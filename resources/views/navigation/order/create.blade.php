@@ -30,24 +30,31 @@
             @csrf
             @method('post')
 
+            {{-- Order Date --}}
+            <div class="mb-3">
+                <label>Order Date:</label>
+                <input type="text" name="order_date" id="order_date" class="form-control" placeholder="Select Date" value="{{ old('order_date') }}" required>
+                <x-error-message field="order_date"/>
+            </div>
+            
             {{-- Order Number --}}
             <div class="mb-3">
                 <label>Order No:</label>
-                <input type="text" name="order_no" id="order_no" class="form-control" value="{{ old('order_no') }}" required>
+                <input type="text" name="order_no" id="order_no" class="form-control" placeholder="Enter Order Number" value="{{ old('order_no') }}" required>
                 <x-error-message field="order_no"/>
             </div>
 
             {{-- Customer Name --}}
             <div class="mb-3">
                 <label>Customer Name:</label>
-                <input type="text" name="customer_name" id="customer_name" class="form-control" value="{{ old('customer_name') }}" required>
+                <input type="text" name="customer_name" id="customer_name" class="form-control" placeholder="Enter Customer Name" value="{{ old('customer_name') }}" required>
                 <x-error-message field="customer_name"/>
             </div>
 
             {{-- Customer Address --}}
             <div class="mb-3">
                 <label>Customer Address:</label>
-                <input type="text" name="customer_address" id="customer_address" class="form-control" value="{{ old('customer_address') }}" required>
+                <input type="text" name="customer_address" id="customer_address" class="form-control" placeholder="Enter Customer Address" value="{{ old('customer_address') }}" required>
                 <x-error-message field="customer_address"/>
             </div>
 
@@ -139,6 +146,15 @@
 
 {{-- Scripts --}}
 @push('scripts')
+
+{{-- DatePicker --}}
+<script>
+    $(document).ready(function() {
+        $("#order_date").datepicker({
+            dateFormat: "yy-mm-dd"
+        });
+    });
+</script>
 
 {{-- Success Notification --}}
 @if(session()->has('addSuccess'))

@@ -51,7 +51,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Connect with role table
+     * Connect with roles table
      */
     public function role() {
         return $this->belongsTo(Role::class);
@@ -62,7 +62,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Connect with order table
+     * Connect with orders table
      */
     public function assignedOrders() {
         return $this->hasMany(Order::class, 'assigned_user_id', 'id');

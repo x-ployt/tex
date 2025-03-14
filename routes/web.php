@@ -79,6 +79,6 @@ Route::middleware(['auth', 'RiderOnly'])->group(function () {
 });
 
 Route::post('/track-order/search', [TrackOrderController::class, 'search'])->name('track.order.search');
-
+Route::post('/track/order/verify', [TrackOrderController::class, 'verifyOrder'])->name('track.order.verify');
 
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');

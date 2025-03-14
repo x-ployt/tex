@@ -13,6 +13,7 @@ class Order extends Model
 
     protected $fillable = [
         'order_no',
+        'order_date',
         'order_status',
         'assigned_user_id',
         'branch_id',
@@ -30,17 +31,23 @@ class Order extends Model
     ];
 
     /**
-     * Connect with user table
+     * Connect with users table
      */
     public function assignedUser() {
         return $this->belongsTo(User::class, 'assigned_user_id', 'id'); 
     }
 
+    /**
+     * Connect with branches table
+     */
     public function branch()
     {
         return $this->belongsTo(Branch::class, 'branch_id');
     }
     
+    /**
+     * Connect with order_history table
+     */
     public function orderHistory() {
         return $this->hasMany(OrderHistory::class); 
     }

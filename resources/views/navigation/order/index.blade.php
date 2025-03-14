@@ -30,6 +30,7 @@
         <input type="text" id="to" name="to"> --}}
         <thead>
             <tr>
+                <th>Order Date</th>
                 <th>Order No.</th>
                 @if (Auth::user()->role->role_name === 'SuperAdmin')
                 <th>Branch</th>
@@ -47,6 +48,7 @@
         <tbody>
             @foreach ($orders as $order)
                 <tr>
+                    <td>{{ $order->order_date }}</td>
                     <td>{{ $order->order_no }}</td>
                     @if (Auth::user()->role->role_name === 'SuperAdmin')
                     <td>{{ $order->branch->branch_name }}</td>
@@ -86,7 +88,7 @@
     $(document).ready(function() {
         new DataTable('#data_table', {
             columnDefs: [
-                { orderable: false, targets: [9] }, 
+                { orderable: false, targets: [10] }, 
                 { width: "auto", targets: '_all' },
                 { className: 'text-center', targets: '_all' }
             ],
@@ -147,7 +149,7 @@
     $(document).ready(function() {
         new DataTable('#data_table', {
             columnDefs: [
-                { orderable: false, targets: [8] },
+                { orderable: false, targets: [9] },
                 { width: "auto", targets: '_all' },
                 { className: 'text-center', targets: '_all' }
             ],

@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Hash;
 class AccountController extends Controller
 {
     /**
-     * Redirect to the employee account page.
+     * Redirect to account.index
      */
     public function index() {
         $users = User::all()->skip(1);
@@ -22,7 +22,7 @@ class AccountController extends Controller
     }
 
     /**
-     * Redirect to the view employee account page.
+     * Redirect to account.view
      */
     public function view(User $user) {
         $roles = Role::all()->skip(1);
@@ -31,7 +31,7 @@ class AccountController extends Controller
     }
 
     /**
-     * Add account
+     * Function to create an account
      */
     public function addAccount(AccountValidation $request) {
         $data = $request->validated();
@@ -42,7 +42,7 @@ class AccountController extends Controller
     }
 
     /**
-     * Update account
+     * Function to update an account
      */
     public function updateAccount(AccountValidation $request, User $user) {
         $data = $request->validated();
@@ -51,7 +51,7 @@ class AccountController extends Controller
     }
 
     /**
-     * Reset password
+     * Function to reset password
      */
     public function resetPassword(User $user) {
         $user->update([
