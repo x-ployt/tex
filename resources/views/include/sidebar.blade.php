@@ -14,6 +14,7 @@
         {{-- Admin Sidebar --}}
         @elseif(Auth::user()->role->role_name == 'Admin')
             @include('include.sidebar-menu.order')
+            @include('include.sidebar-menu.employee-maintenance')
 
         {{-- Rider Sidebar --}}
         @elseif(Auth::user()->role->role_name == 'Rider')
@@ -21,3 +22,4 @@
         @endif
     </ul>
 </nav>
+

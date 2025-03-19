@@ -7,6 +7,7 @@ use App\Http\Requests\AccountValidation;
 use App\Models\User;
 use App\Models\Role;
 use App\Models\Branch;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AccountController extends Controller
@@ -15,11 +16,23 @@ class AccountController extends Controller
      * Redirect to account.index
      */
     public function index() {
-        $users = User::all()->skip(1);
-        $roles = Role::all();
-        $branches = Branch::all();
+        if (Auth::user()->role->role_name === 'SuperAdmin') {
+            $roles = Role::all();
+            $users = User::where('id', '!=', Auth::id())->get();
+            $branches = Branch::all();
+        } else {
+            $roles = Role::where('role_name', '!=', 'SuperAdmin')->get();
+            $users = User::whereHas('role', function ($query) {
+                            $query->where('role_name', '!=', 'SuperAdmin');
+                        })
+                        ->where('branch_id', Auth::user()->branch_id)
+                        ->where('id', '!=', Auth::id())
+                        ->get();
+            $branches = Branch::where('id', Auth::user()->branch_id)->get();
+        }
+    
         return view('navigation.employee_maintenance.account.index', compact('users', 'roles', 'branches'));
-    }
+    }    
 
     /**
      * Redirect to account.view

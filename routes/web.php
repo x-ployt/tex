@@ -40,6 +40,10 @@ Route::middleware(['auth', 'SuperAdminOnly'])->group(function () {
         Route::post('/add', [RoleController::class, 'addRole'])->name('role.addRole');
         Route::put('/{role}/update', [RoleController::class, 'updateRole'])->name('role.updateRole');
     });
+    
+});
+
+Route::middleware(['auth', 'AdminOnly'])->group(function () {
 
     Route::prefix('employee-maintenance/accounts')->group(function () {
         Route::get('/', [AccountController::class, 'index'])->name('account.index');
@@ -48,10 +52,6 @@ Route::middleware(['auth', 'SuperAdminOnly'])->group(function () {
         Route::put('/{user}/update', [AccountController::class, 'updateAccount'])->name('account.updateAccount');
         Route::put('/{user}/reset-password', [AccountController::class, 'resetPassword'])->name('account.resetPassword');
     });
-    
-});
-
-Route::middleware(['auth', 'AdminOnly'])->group(function () {
 
     Route::prefix('orders')->group(function () {
         Route::get('/', [OrderController::class, 'index'])->name('order.index');
