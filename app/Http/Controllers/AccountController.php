@@ -16,7 +16,7 @@ class AccountController extends Controller
      */
     public function index() {
         $users = User::all()->skip(1);
-        $roles = Role::where('role_name', '!=', 'SuperAdmin')->get();
+        $roles = Role::all();
         $branches = Branch::all();
         return view('navigation.employee_maintenance.account.index', compact('users', 'roles', 'branches'));
     }
