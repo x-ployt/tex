@@ -10,5 +10,5 @@ export default defineConfig({
             refresh: true,
         }),
     ],
-    base: "https://sed.salveowell.com/build/",
+    base: "/",
 });
