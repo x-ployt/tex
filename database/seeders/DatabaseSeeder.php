@@ -40,26 +40,5 @@ class DatabaseSeeder extends Seeder
             'branch_id' => Branch::where('branch_name', 'Main Branch')->first()->id,  // Get Admin department ID dynamically
         ]);
 
-        // Create admin user
-        User::create([
-            'role_id' => Role::where('role_name', 'Admin')->first()->id,  // Get Admin role ID dynamically
-            'name' => 'Admin',
-            'username' => 'Admin',
-            'email' => 'admin@gmail.com',
-            'contact_number' => '09999999999',
-            'password' => Hash::make('adminadmin'),
-            'branch_id' => Branch::where('branch_name', 'Main Branch')->first()->id,  // Get Admin department ID dynamically
-        ]);
-
-        // Create admin user
-        User::create([
-            'role_id' => Role::where('role_name', 'Rider')->first()->id,  // Get Admin role ID dynamically
-            'name' => 'Rider',
-            'username' => 'Rider',
-            'email' => 'rider@gmail.com',
-            'contact_number' => '09999999999',
-            'password' => Hash::make('riderrider'),
-            'branch_id' => Branch::where('branch_name', 'Main Branch')->first()->id,  // Get Admin department ID dynamically
-        ]);
     }
 }
