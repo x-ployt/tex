@@ -56,6 +56,10 @@
                 <span class="text-dark" style="font-size: 15px;">{{ $order->assignedUser->name ?? 'Not Assigned' }}</span>
             </div>
             <div class="col-md-12 mt-2">
+                <h6 class="font-weight-bold d-inline">Order Date:</h6>
+                <span class="text-dark" style="font-size: 15px;">{{ date("D, M j, Y", strtotime($order->order_date)) }}</span>
+            </div>
+            <div class="col-md-12 mt-2">
                 <h class="font-weight-bold d-inline">Order Status:</h6>
                 <span class="badge 
                     @if($order->order_status === 'Re-Schedule Delivery') bg-warning 
