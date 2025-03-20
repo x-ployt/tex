@@ -72,7 +72,7 @@
 
            {{-- Order Amount --}}
             <div class="mb-3">
-                <label for="order_amount">Order Amount<span class="text-danger">*</span></label>
+                <label for="order_amount">Order Amount:<span class="text-danger">*</span></label>
                 <input type="text" name="order_amount" id="order_amount" class="form-control" 
                     placeholder="Enter Order Amount" 
                     pattern="^\d+(\.\d{1,2})?$"
