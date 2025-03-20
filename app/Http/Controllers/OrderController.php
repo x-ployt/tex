@@ -106,15 +106,15 @@ class OrderController extends Controller
         // Define a mapping from CSV column names to database fields
         $columnMap = [
             'Order Date'         => 'order_date',
-            'Order No'         => 'order_no',
+            'Order No.'         => 'order_no',
             'Customer Name'    => 'customer_name',
-            'Customer Address' => 'customer_address',
+            'Address' => 'customer_address',
             'Contact Number'  => 'customer_contact_number',
             'Amount'  => 'order_amount',
             'MOP'  => 'order_mop',
-            'Branch Name'      => 'branch_name', // Changed from 'Branch ID' to 'Branch Name'
-            'Rider Name'       => 'rider_name',  // New column to get user_id from users table
-            'Order Status'     => 'order_status',
+            'Branch'      => 'branch_name', // Changed from 'Branch ID' to 'Branch Name'
+            'Rider'       => 'rider_name',  // New column to get user_id from users table
+            'Status'     => 'order_status',
         ];
 
         // Check if headers match expected values

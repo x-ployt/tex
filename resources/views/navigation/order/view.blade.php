@@ -52,7 +52,7 @@
                 <span class="text-dark" style="font-size: 15px;">{{ $order->branch->branch_name }}</span>
             </div>
             <div class="col-md-12 mt-2">
-                <h6 class="font-weight-bold d-inline">Assigned Rider:</h6>
+                <h6 class="font-weight-bold d-inline">Rider:</h6>
                 <span class="text-dark" style="font-size: 15px;">{{ $order->assignedUser->name ?? 'Not Assigned' }}</span>
             </div>
             <div class="col-md-12 mt-2">

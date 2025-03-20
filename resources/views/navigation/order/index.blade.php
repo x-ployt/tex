@@ -32,15 +32,13 @@
             <tr>
                 <th>Order Date</th>
                 <th>Order No.</th>
-                @if (Auth::user()->role->role_name === 'SuperAdmin')
-                <th>Branch</th>
-                @endif
                 <th>Customer Name</th>
                 <th>Address</th>
                 <th>Contact Number</th>
                 <th>Amount</th>
                 <th>MOP</th>
-                <th>Assigned Rider</th>
+                <th>Branch</th>
+                <th>Rider</th>
                 <th>Status</th>
                 <th class="action" style="width: 50px;">Action</th>
             </tr>
@@ -48,16 +46,14 @@
         <tbody>
             @foreach ($orders as $order)
                 <tr>
-                    <td>{{ $order->order_date }}</td>
+                    <td>{{ date("m-d-Y", strtotime($order->order_date)) }}</td>
                     <td>{{ $order->order_no }}</td>
-                    @if (Auth::user()->role->role_name === 'SuperAdmin')
-                    <td>{{ $order->branch->branch_name }}</td>
-                    @endif
                     <td>{{ $order->customer_name }}</td>
                     <td>{{ $order->customer_address }}</td>
                     <td>{{ $order->customer_contact_number }}</td>
                     <td>{{ number_format($order->order_amount, 2) }}</td>
                     <td>{{ $order->order_mop }}</td>
+                    <td>{{ $order->branch->branch_name }}</td>
                     <td>{{ $order->assignedUser->name }}</td>
                     <td>   
                         <span class="badge 
@@ -83,7 +79,7 @@
 {{-- Scripts --}}
 @push('scripts')
 
-@if (Auth::user()->role->role_name === 'SuperAdmin')
+{{-- @if (Auth::user()->role->role_name === 'SuperAdmin') --}}
 <script>
     $(document).ready(function() {
         new DataTable('#data_table', {
@@ -144,7 +140,7 @@
     // });
 </script>
 
-@else 
+{{-- @else 
 <script>
     $(document).ready(function() {
         new DataTable('#data_table', {
@@ -204,7 +200,7 @@
     //     }
     // });
 </script>
-@endif
+@endif --}}
 
 @endpush
 @endsection
