@@ -32,28 +32,28 @@
 
             {{-- Order Date --}}
             <div class="mb-3">
-                <label>Order Date:</label>
+                <label for="order_date" class="form-label">Order Date:<span class="text-danger">*</span></label>
                 <input type="text" name="order_date" id="order_date" class="form-control" placeholder="Select Date" value="{{ old('order_date') }}" required>
                 <x-error-message field="order_date"/>
             </div>
             
             {{-- Order Number --}}
             <div class="mb-3">
-                <label>Order No:</label>
+                <label for="order_no" class="form-label">Order No:<span class="text-danger">*</span></label>
                 <input type="text" name="order_no" id="order_no" class="form-control" placeholder="Enter Order Number" value="{{ old('order_no') }}" required>
                 <x-error-message field="order_no"/>
             </div>
 
             {{-- Customer Name --}}
             <div class="mb-3">
-                <label>Customer Name:</label>
+                <label for="customer_name" class="form-label">Customer Name:<span class="text-danger">*</span></label>
                 <input type="text" name="customer_name" id="customer_name" class="form-control" placeholder="Enter Customer Name" value="{{ old('customer_name') }}" required>
                 <x-error-message field="customer_name"/>
             </div>
 
             {{-- Customer Address --}}
             <div class="mb-3">
-                <label>Customer Address:</label>
+                <label for="customer_address" class="form-label">Customer Address:<span class="text-danger">*</span></label>
                 <input type="text" name="customer_address" id="customer_address" class="form-control" placeholder="Enter Customer Address" value="{{ old('customer_address') }}" required>
                 <x-error-message field="customer_address"/>
             </div>
@@ -83,7 +83,7 @@
 
             {{-- Order Mode of Payment --}}
             <div class="mb-3">
-                <label for="order_mop" class="form-label">Order Status:</label>
+                <label for="order_mop" class="form-label">MOP:<span class="text-danger">*</span></label>
                 <select name="order_mop" id="order_mop" class="form-control">
                     <option value="COD" selected>COD</option>
                     <option value="GCASH">GCASH</option>
@@ -96,7 +96,7 @@
 
             {{-- Delivery Rider --}}
             <div class="mb-3">
-                <label>Assigned Delivery Rider:</label>
+                <label for="assigned_user_id" class="form-label">Assigned Delivery Rider:<span class="text-danger">*</span></label>
                 <select name="assigned_user_id" id="assigned_user_id" class="form-control select2" required>
                     <option value="" selected>Select Rider</option>
                     @foreach ($riders as $rider)
@@ -108,7 +108,7 @@
 
             {{-- Branch --}}
             <div class="mb-3">
-                <label>Branch:</label>
+                <label for="branch_id" class="form-label">Branch:<span class="text-danger">*</span></label>
                 <select name="branch_id" id="branch_id" class="form-control" required>
                     <option value="" selected>Select Branch</option>
                     @foreach ($branches as $branch)
@@ -120,7 +120,7 @@
 
             {{-- Order Status --}}
             <div class="mb-3">
-                <label for="order_status" class="form-label">Order Status:</label>
+                <label for="order_status" class="form-label">Order Status:<span class="text-danger">*</span></label>
                 <select name="order_status" id="order_status" class="form-control">
                     <option value="For Delivery" selected>For Delivery</option>
                     <option value="Delivered">Delivered</option>
