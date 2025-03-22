@@ -82,30 +82,30 @@
 {{-- @if (Auth::user()->role->role_name === 'SuperAdmin') --}}
 <script>
     $(document).ready(function() {
-        new DataTable('#data_table', {
-            columnDefs: [
-                { orderable: false, targets: [10] }, 
-                { width: "auto", targets: '_all' },
-                { className: 'text-center', targets: '_all' }
-            ],
-            fixedHeader: true,
-            layout: {
-                topStart: {
-                    buttons: [
-                        {
-                            extend: 'excel',
-                            text: 'Export as excel',
-                            className: 'btn btn-sm btn-primary', 
-                            exportOptions: {
-                                modifier: { page: 'current' },
-                                columns: ':not(:last-child)' 
-                            }
-                        }
-                    ]
+    new DataTable('#data_table', {
+        lengthMenu: [10, 25, 50, 100], // Options for entries per page
+        pageLength: 10, // Default entries per page
+        columnDefs: [
+            { orderable: false, targets: [10] }, 
+            { width: "auto", targets: '_all' },
+            { className: 'text-center', targets: '_all' }
+        ],
+        fixedHeader: true,
+        dom: '<"top d-flex justify-content-between mt-2 mb-2"<"d-flex"lB>>rt<"bottom"ip><"clear">', 
+        buttons: [
+            {
+                extend: 'excel',
+                text: 'Export as Excel',
+                className: 'ml-3 btn btn-sm btn-primary', 
+                exportOptions: {
+                    modifier: { page: 'current' },
+                    columns: ':not(:last-child)' 
                 }
-            },
-        });
+            }
+        ]
     });
+});
+
 
     // $( function() {
     //     var dateFormat = "mm/dd/yy",

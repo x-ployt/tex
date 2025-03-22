@@ -22,7 +22,7 @@
                      {{-- Order Date --}}
                     <div class="mb-3">
                         <label for="order_date{{$order->id}}" class="form-label">Order Date:<span class="text-danger">*</span></label>
-                        <input type="text" name="order_date" id="order_date{{$order->id}}" class="form-control" value="{{$order->order_date}}" required>
+                        <input type="text" name="order_date" id="order_date{{$order->id}}" class="form-control" value="{{ date("Y-m-d", strtotime($order->order_date)) }}" required>
                     </div>
 
                     {{-- Order No --}}

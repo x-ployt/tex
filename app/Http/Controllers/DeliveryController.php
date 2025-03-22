@@ -25,7 +25,17 @@ class DeliveryController extends Controller
             $query->where('order_status', $request->order_status);
         }
 
+        // Apply search filter for order_no
+        if ($request->has('search') && !empty($request->search)) {
+            $query->where('order_no', 'like', '%' . $request->search . '%');
+        }
+
         $orders = $query->get();
+
+        // Return JSON if request is AJAX
+        if ($request->ajax()) {
+            return response()->json(['orders' => $orders]);
+        }
 
         return view('navigation.delivery.index', compact('orders'));
     }

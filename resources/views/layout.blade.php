@@ -23,7 +23,7 @@
             </nav>
 
             {{-- Sidebar --}}
-            <aside id="sideBar" class="main-sidebar sidebar-dark-primary elevation-4">
+            <aside id="sideBar" class="main-sidebar elevation-4" style="background-color: #4CAF50; color: white;">
                 <p href="{{route('dashboard')}}" class="brand-link logo-switch" style="background-color: #4CAF50; color: white;">
                     <i class="fa-solid fa-fw fa-box fa-lg" style="color: #fda720"></i>
                     <span class="brand-text fw-bold">TEX</span>
