@@ -46,7 +46,7 @@
         <tbody>
             @foreach ($orders as $order)
                 <tr>
-                    <td>{{ date("m-d-Y", strtotime($order->order_date)) }}</td>
+                    <td>{{ date("Y-m-d", strtotime($order->order_date)) }}</td>
                     <td>{{ $order->order_no }}</td>
                     <td>{{ $order->customer_name }}</td>
                     <td>{{ $order->customer_address }}</td>
