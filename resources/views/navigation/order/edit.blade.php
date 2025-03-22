@@ -66,7 +66,7 @@
 
                     {{-- Order Mode of Payment --}}
                     <div class="mb-3">
-                        <label for="order_mop{{$order->id}}" class="form-label">Mode of Payment:<span class="text-danger">*</span></label>
+                        <label for="order_mop{{$order->id}}" class="form-label">MOP:<span class="text-danger">*</span></label>
                         <select name="order_mop" id="order_mop{{$order->id}}" class="form-control">
                             @foreach(['COD', 'GCASH', 'Remittance', 'Bank', 'Credit/Debit Card', 'Xendit'] as $mop)
                                 <option value="{{ $mop }}" {{ old('order_mop', $order->order_mop) == $mop ? 'selected' : '' }}>
