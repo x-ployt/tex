@@ -51,7 +51,7 @@
                     <td>{{ $order->customer_name }}</td>
                     <td>{{ $order->customer_address }}</td>
                     <td>{{ $order->customer_contact_number }}</td>
-                    <td>{{ number_format($order->order_amount, 2) }}</td>
+                    <td>{{ number_format((float) str_replace(',', '', $order->order_amount), 2) }}</td>
                     <td>{{ $order->order_mop }}</td>
                     <td>{{ $order->branch->branch_name }}</td>
                     <td>{{ $order->assignedUser->name }}</td>
