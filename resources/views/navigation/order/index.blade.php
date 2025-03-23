@@ -46,12 +46,12 @@
         <tbody>
             @foreach ($orders as $order)
                 <tr>
-                    <td>{{ date("m-d-Y", strtotime($order->order_date)) }}</td>
+                    <td>{{ date("Y-m-d", strtotime($order->order_date)) }}</td>
                     <td>{{ $order->order_no }}</td>
                     <td>{{ $order->customer_name }}</td>
                     <td>{{ $order->customer_address }}</td>
                     <td>{{ $order->customer_contact_number }}</td>
-                    <td>{{ number_format($order->order_amount, 2) }}</td>
+                    <td>{{ number_format((float) str_replace(',', '', $order->order_amount), 2) }}</td>
                     <td>{{ $order->order_mop }}</td>
                     <td>{{ $order->branch->branch_name }}</td>
                     <td>{{ $order->assignedUser->name }}</td>
@@ -82,30 +82,30 @@
 {{-- @if (Auth::user()->role->role_name === 'SuperAdmin') --}}
 <script>
     $(document).ready(function() {
-        new DataTable('#data_table', {
-            columnDefs: [
-                { orderable: false, targets: [10] }, 
-                { width: "auto", targets: '_all' },
-                { className: 'text-center', targets: '_all' }
-            ],
-            fixedHeader: true,
-            layout: {
-                topStart: {
-                    buttons: [
-                        {
-                            extend: 'excel',
-                            text: 'Export as excel',
-                            className: 'btn btn-sm btn-primary', 
-                            exportOptions: {
-                                modifier: { page: 'current' },
-                                columns: ':not(:last-child)' 
-                            }
-                        }
-                    ]
+    new DataTable('#data_table', {
+        lengthMenu: [10, 25, 50, 100], // Options for entries per page
+        pageLength: 10, // Default entries per page
+        columnDefs: [
+            { orderable: false, targets: [10] }, 
+            { width: "auto", targets: '_all' },
+            { className: 'text-center', targets: '_all' }
+        ],
+        fixedHeader: true,
+        dom: '<"top d-flex justify-content-between mt-2 mb-2"<"d-flex"lB>>rt<"bottom"ip><"clear">', 
+        buttons: [
+            {
+                extend: 'excel',
+                text: 'Export as Excel',
+                className: 'ml-3 btn btn-sm btn-primary', 
+                exportOptions: {
+                    modifier: { page: 'current' },
+                    columns: ':not(:last-child)' 
                 }
-            },
-        });
+            }
+        ]
     });
+});
+
 
     // $( function() {
     //     var dateFormat = "mm/dd/yy",

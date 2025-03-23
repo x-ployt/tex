@@ -40,7 +40,7 @@
             </div>
             <div class="col-md-12 mt-2">
                 <h6 class="font-weight-bold d-inline">Amount:</h6>
-                <span class="text-dark" style="font-size: 15px;">{{ number_format($order->order_amount, 2) }}</span>
+                <span class="text-dark" style="font-size: 15px;">{{ number_format((float) str_replace(',', '', $order->order_amount), 2) }}</span>
             </div>
             <div class="col-md-12 mt-2">
                 <h6 class="font-weight-bold d-inline">Mode of Payment:</h6>

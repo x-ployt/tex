@@ -22,7 +22,7 @@
                      {{-- Order Date --}}
                     <div class="mb-3">
                         <label for="order_date{{$order->id}}" class="form-label">Order Date:<span class="text-danger">*</span></label>
-                        <input type="text" name="order_date" id="order_date{{$order->id}}" class="form-control" value="{{$order->order_date}}" required>
+                        <input type="text" name="order_date" id="order_date{{$order->id}}" class="form-control" value="{{ date("Y-m-d", strtotime($order->order_date)) }}" required>
                     </div>
 
                     {{-- Order No --}}
@@ -66,7 +66,7 @@
 
                     {{-- Order Mode of Payment --}}
                     <div class="mb-3">
-                        <label for="order_mop{{$order->id}}" class="form-label">Mode of Payment:<span class="text-danger">*</span></label>
+                        <label for="order_mop{{$order->id}}" class="form-label">MOP:<span class="text-danger">*</span></label>
                         <select name="order_mop" id="order_mop{{$order->id}}" class="form-control">
                             @foreach(['COD', 'GCASH', 'Remittance', 'Bank', 'Credit/Debit Card', 'Xendit'] as $mop)
                                 <option value="{{ $mop }}" {{ old('order_mop', $order->order_mop) == $mop ? 'selected' : '' }}>
