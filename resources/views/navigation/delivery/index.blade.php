@@ -24,29 +24,33 @@
                         $currentDate = strtotime(now());
                         $dateDiff = floor(($currentDate - $orderDate) / (60 * 60 * 24));
                         
-                        if($dateDiff >= 3) {
-                            $bg = 'bg-warning';
-                        } elseif($order->order_status === 'Re-Schedule Delivery') {
-                            $bg = 'bg-orange';
-                        } elseif($order->order_status === 'For Delivery') {
-                            $bg = 'bg-primary';
-                        } elseif($order->order_status === 'Delivered') {
-                            $bg = 'bg-success';
-                        } elseif($order->order_status === 'Cancelled') {
+                        if ($order->order_status === 'Cancelled') {
                             $bg = 'bg-danger';
+                        } elseif ($order->order_status === 'Delivered') {
+                            $bg = 'bg-success';
+                        } elseif ($dateDiff >= 3) {
+                            $bg = 'bg-warning';
+                        } elseif ($order->order_status === 'For Delivery') {
+                            $bg = 'bg-primary';
+                        } elseif ($order->order_status === 'Re-Schedule Delivery') {
+                            $bg = 'bg-orange';
                         } else {
                             $bg = '';
                         }
+
                     @endphp
                     <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
                         <div class="card bg-light d-flex flex-fill position-relative">
-                            @if ($dateDiff >= 3)
-                                <div class="ribbon-wrapper ribbon-lg">
-                                    <div class="ribbon bg-danger text-md">
-                                        {{ $dateDiff }} Days Due
+                            @if ($order->order_status != 'Delivered' && $order->order_status != 'Cancelled')
+                                @if ($dateDiff >= 3)
+                                    <div class="ribbon-wrapper ribbon-lg">
+                                        <div class="ribbon bg-danger text-md">
+                                            {{ $dateDiff }} Days Due
+                                        </div>
                                     </div>
-                                </div>
+                                @endif
                             @endif
+
                             <div class="card-header {{ $bg }} border-bottom-0">
                                     Order # {{ $order->order_no }}
                             </div>
@@ -63,7 +67,7 @@
                                         </li>
                                         <li class="small">
                                             <span class="fa-li"><i class="fas fa-lg fa-peso-sign"></i></span> 
-                                            Amount: {{ number_format($order->order_amount, 2) }}
+                                            Amount: {{ number_format((float) str_replace(',', '', $order->order_amount), 2) }}
                                         </li>
                                         <li class="small">
                                             <span class="fa-li"><i class="fas fa-lg fa-handshake-angle"></i></span> 
