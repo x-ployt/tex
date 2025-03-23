@@ -102,46 +102,48 @@
     $(document).ready(function () {
         $('#searchOrder').on('keyup', function () {
             let searchValue = $(this).val();
-    
+
             $.ajax({
                 url: "{{ route('delivery.index') }}",
                 type: "GET",
                 data: { search: searchValue },
                 success: function (response) {
                     let orders = response.orders;
-                    let ordersContainer = $('.row'); // Target the container of the orders
-                    ordersContainer.html(''); // Clear the current orders
-    
+                    let ordersContainer = $('.row');
+                    ordersContainer.html('');
+
                     if (orders.length > 0) {
                         orders.forEach(order => {
                             let orderDate = new Date(order.order_date);
                             let currentDate = new Date();
                             let timeDiff = currentDate - orderDate;
                             let dateDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-    
+
                             let bgClass = '';
                             let ribbonHtml = '';
-    
-                            // Determine background color and ribbon
-                            if (dateDiff >= 3) {
-                                bgClass = 'bg-warning';
-                                ribbonHtml = `<div class="ribbon-wrapper ribbon-lg">
-                                                <div class="ribbon bg-danger text-md">${dateDiff} Days Due</div>
-                                              </div>`;
-                            } else if (order.order_status === 'Re-Schedule Delivery') {
-                                bgClass = 'bg-orange';
-                            } else if (order.order_status === 'For Delivery') {
-                                bgClass = 'bg-primary';
+
+                            if (order.order_status === 'Cancelled') {
+                                bgClass = 'bg-danger';
                             } else if (order.order_status === 'Delivered') {
                                 bgClass = 'bg-success';
-                            } else if (order.order_status === 'Cancelled') {
-                                bgClass = 'bg-danger';
+                            } else if (dateDiff >= 3) {
+                                bgClass = 'bg-warning';
+                            } else if (order.order_status === 'For Delivery') {
+                                bgClass = 'bg-primary';
+                            } else if (order.order_status === 'Re-Schedule Delivery') {
+                                bgClass = 'bg-orange';
                             }
-    
+
+                            if (dateDiff >= 3 && order.order_status !== 'Delivered' && order.order_status !== 'Cancelled') {
+                                ribbonHtml = `<div class="ribbon-wrapper ribbon-lg">
+                                                <div class="ribbon bg-danger text-md">${dateDiff} Days Due</div>
+                                            </div>`;
+                            }
+
                             let formattedDate = orderDate.toLocaleDateString('en-US', {
                                 weekday: 'short', month: 'short', day: 'numeric', year: 'numeric'
                             });
-    
+
                             let orderHtml = `
                                 <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
                                     <div class="card bg-light d-flex flex-fill position-relative">
@@ -154,7 +156,7 @@
                                             <p class="text-muted text-sm"><b>Address:</b> ${order.customer_address}</p>
                                             <ul class="ml-4 mb-0 fa-ul text-muted">
                                                 <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Contact Number: ${order.customer_contact_number}</li>
-                                                <li class="small"><span class="fa-li"><i class="fas fa-lg fa-peso-sign"></i></span> Amount: ${parseFloat(order.order_amount).toFixed(2)}</li>
+                                                <li class="small"><span class="fa-li"><i class="fas fa-lg fa-peso-sign"></i></span> Amount: ${parseFloat(order.order_amount.replace(/,/g, '')).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</li>
                                                 <li class="small"><span class="fa-li"><i class="fas fa-lg fa-handshake-angle"></i></span> Mode of Payment: ${order.order_mop}</li>
                                                 <li class="small"><span class="fa-li"><i class="fas fa-lg fa-box"></i></span> Status: ${order.order_status}</li>
                                                 <li class="small"><span class="fa-li"><i class="fas fa-lg fa-calendar"></i></span> Order Date: ${formattedDate}</li>
@@ -167,7 +169,7 @@
                                         </div>
                                     </div>
                                 </div>`;
-                            
+
                             ordersContainer.append(orderHtml);
                         });
                     } else {
@@ -177,6 +179,6 @@
             });
         });
     });
-    </script>
+</script>
 @endpush
 @endsection
