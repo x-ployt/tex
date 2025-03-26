@@ -26,7 +26,7 @@ class DeliveryValidation extends FormRequest
         if ($routeName === 'order.markDelivered') {
             return [
                 'delivery_photos'   => 'required|array|min:1',
-                'delivery_photos.*' => 'required|file|mimes:jpg,jpeg,png|max:2048',
+                'delivery_photos.*' => 'required|file|mimes:jpg,jpeg,png|max:51200',
             ];
         } elseif ($routeName === 'order.markCancelled') {
             return [

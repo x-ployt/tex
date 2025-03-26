@@ -9,6 +9,7 @@ use App\Models\OrderHistory;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class DeliveryController extends Controller
 {
@@ -74,10 +75,10 @@ class DeliveryController extends Controller
     {
         $files = $request->file('delivery_photos');
         $filePaths = [];
-        
-        // Process uploaded proof photos
+
         if ($files) {
             foreach ($files as $file) {
+                // Store the file without compression
                 $path = $file->store('delivery_photos', 'public');
                 $filePaths[] = $path;
             }
@@ -88,13 +89,14 @@ class DeliveryController extends Controller
             'file_paths'   => json_encode($filePaths),
         ]);
 
-        OrderHistory::updateOrCreate(
-            ['order_id' => $order->id, 'order_status' => 'Delivered', 'delivery_remarks' => 'Order has been delivered.']
-        );
-        
+        OrderHistory::updateOrCreate([
+            'order_id' => $order->id,
+            'order_status' => 'Delivered',
+            'delivery_remarks' => 'Order has been delivered.',
+        ]);
 
         return redirect()->route('delivery.view', $order)
-                         ->with('updateSuccess', 'Order marked as delivered.');
+                        ->with('updateSuccess', 'Order marked as delivered.');
     }
 
     /**

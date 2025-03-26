@@ -164,7 +164,7 @@
                                         </div>
                                         <div class="card-footer">
                                             <div class="text-right">
-                                                <x-view-button class="extra-class" route="/delivery/view/${order.id}" title="View Order Details"/>
+                                                <x-view-button class="extra-class" route="/deliveries/${order.id}" title="View Order Details"/>
                                             </div>
                                         </div>
                                     </div>
