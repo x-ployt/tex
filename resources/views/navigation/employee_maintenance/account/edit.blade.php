@@ -8,7 +8,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content text-left">
 
-            <form action="{{route('account.updateAccount', $user)}}" method="post" id="editAccountForm">
+            <form action="{{route('account.update', $user)}}" method="post" id="editAccountForm">
                 @csrf
                 @method('put')
             

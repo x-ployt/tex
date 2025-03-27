@@ -7,7 +7,7 @@
         'Re-Schedule Delivery' => 'btn-warning',
         'For Delivery' => 'btn-primary',
         'Delivered' => 'btn-success',
-        'Cancelled' => 'btn-danger',
+        'RTS' => 'btn-danger',
         'all' => 'btn-secondary' // Default color
     ];
 
@@ -23,6 +23,6 @@
         <li><a class="dropdown-item {{ $buttonColor }} {{ $selectedStatus === 'Re-Schedule Delivery' ? 'active' : '' }}" href="{{ route($currentRoute, ['order_status' => 'Re-Schedule Delivery']) }}">Re-Schedule Delivery</a></li>
         <li><a class="dropdown-item {{ $buttonColor }} {{ $selectedStatus === 'For Delivery' ? 'active' : '' }}" href="{{ route($currentRoute, ['order_status' => 'For Delivery']) }}">For Delivery</a></li>
         <li><a class="dropdown-item {{ $buttonColor }} {{ $selectedStatus === 'Delivered' ? 'active' : '' }}" href="{{ route($currentRoute, ['order_status' => 'Delivered']) }}">Delivered</a></li>
-        <li><a class="dropdown-item {{ $buttonColor }} {{ $selectedStatus === 'Cancelled' ? 'active' : '' }}" href="{{ route($currentRoute, ['order_status' => 'Cancelled']) }}">Cancelled</a></li>
+        <li><a class="dropdown-item {{ $buttonColor }} {{ $selectedStatus === 'RTS' ? 'active' : '' }}" href="{{ route($currentRoute, ['order_status' => 'RTS']) }}">RTS</a></li>
     </ul>
 </div>

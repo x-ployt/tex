@@ -5,9 +5,11 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\RemarkController;
 use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TrackOrderController;
+use App\Models\Remark;
 
 Route::get('/', function () {
     return view('guest');
@@ -30,15 +32,22 @@ Route::middleware(['auth', 'SuperAdminOnly'])->group(function () {
     Route::prefix('branches')->group(function () {
         Route::get('/', [BranchController::class, 'index'])->name('branch.index');
         Route::get('/{branch}/view', [BranchController::class, 'view'])->name('branch.view');
-        Route::post('/add', [BranchController::class, 'addBranch'])->name('branch.addBranch');
-        Route::put('/{branch}/update', [BranchController::class, 'updateBranch'])->name('branch.updateBranch');
+        Route::post('/add', [BranchController::class, 'store'])->name('branch.store');
+        Route::put('/{branch}/update', [BranchController::class, 'update'])->name('branch.update');
     });
 
     Route::prefix('employee-maintenance/roles')->group(function () {
         Route::get('/', [RoleController::class, 'index'])->name('role.index');
         Route::get('/{role}/view', [RoleController::class, 'view'])->name('role.view');
-        Route::post('/add', [RoleController::class, 'addRole'])->name('role.addRole');
-        Route::put('/{role}/update', [RoleController::class, 'updateRole'])->name('role.updateRole');
+        Route::post('/add', [RoleController::class, 'store'])->name('role.store');
+        Route::put('/{role}/update', [RoleController::class, 'update'])->name('role.update');
+    });
+
+    Route::prefix('setting/remarks')->group(function () {
+        Route::get('/', [RemarkController::class, 'index'])->name('remark.index');
+        Route::get('/{remark}/view', [RemarkController::class, 'view'])->name('remark.view');
+        Route::post('/add', [RemarkController::class, 'store'])->name('remark.store');
+        Route::put('/{remark}/update', [RemarkController::class, 'update'])->name('remark.update');
     });
     
 });
@@ -48,8 +57,8 @@ Route::middleware(['auth', 'AdminOnly'])->group(function () {
     Route::prefix('employee-maintenance/accounts')->group(function () {
         Route::get('/', [AccountController::class, 'index'])->name('account.index');
         Route::get('/{user}/view', [AccountController::class, 'view'])->name('account.view');
-        Route::post('/add', [AccountController::class, 'addAccount'])->name('account.addAccount');
-        Route::put('/{user}/update', [AccountController::class, 'updateAccount'])->name('account.updateAccount');
+        Route::post('/add', [AccountController::class, 'store'])->name('account.store');
+        Route::put('/{user}/update', [AccountController::class, 'update'])->name('account.update');
         Route::put('/{user}/reset-password', [AccountController::class, 'resetPassword'])->name('account.resetPassword');
     });
 
@@ -71,8 +80,8 @@ Route::middleware(['auth', 'RiderOnly'])->group(function () {
         Route::get('/', [DeliveryController::class, 'index'])->name('delivery.index');
         Route::get('/{order}', [DeliveryController::class, 'view'])->name('delivery.view');
         Route::put('/{order}/delivered', [DeliveryController::class, 'markDelivered'])->name('order.markDelivered');
-        Route::put('/{order}/cancelled', [DeliveryController::class, 'markCancelled'])->name('order.markCancelled');
-        Route::put('/delivery/{order}/reschedule', [DeliveryController::class, 'markReschedule'])->name('delivery.reschedule');
+        Route::put('/{order}/cancelled', [DeliveryController::class, 'markRTS'])->name('order.markRTS');
+        Route::put('/{order}/re-schedule', [DeliveryController::class, 'markReschedule'])->name('delivery.reschedule');
 
     });
     

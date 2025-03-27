@@ -56,7 +56,7 @@
                     @if($order->order_status === 'For Delivery') bg-primary 
                     @elseif($order->order_status === 'Re-Schedule Delivery') bg-orange 
                     @elseif($order->order_status === 'Delivered') bg-success 
-                    @elseif($order->order_status === 'Cancelled') bg-danger 
+                    @elseif($order->order_status === 'RTS') bg-danger 
                     @endif">
                     {{ $order->order_status }}
                 </span>
@@ -65,7 +65,7 @@
             {{-- Reason --}}
             @if(!empty($order->reason))
                 <div class="col-md-12 mt-2">
-                    <h6 class="font-weight-bold d-inline">Reason for cancel:</h6>
+                    <h6 class="font-weight-bold d-inline">Reason for rts:</h6>
                     <span class="text-dark" style="font-size: 15px;">{{ $order->reason }}</span>
                 </div>
             @endif
@@ -99,7 +99,7 @@
 
             @include('navigation.delivery.delivered')
             @include('navigation.delivery.re-schedule')
-            @include('navigation.delivery.cancelled')
+            @include('navigation.delivery.rts')
             
             
         </div>

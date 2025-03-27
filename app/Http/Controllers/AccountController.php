@@ -46,18 +46,18 @@ class AccountController extends Controller
     /**
      * Function to create an account
      */
-    public function addAccount(AccountValidation $request) {
+    public function store(AccountValidation $request) {
         $data = $request->validated();
-        $data['password'] = Hash::make("12345678");  // Default password
-        $data['status'] = 'active'; // Set default status to active
-        User::create($data);  // Create the employee
+        $data['password'] = Hash::make("12345678");
+        // $data['status'] = 'active';
+        User::create($data);
         return redirect()->back()->with('addSuccess', 'Add success');
     }
 
     /**
      * Function to update an account
      */
-    public function updateAccount(AccountValidation $request, User $user) {
+    public function update(AccountValidation $request, User $user) {
         $data = $request->validated();
         $user->update($data);  // Update the employee
         return redirect()->back()->with('updateSuccess', 'Update success');

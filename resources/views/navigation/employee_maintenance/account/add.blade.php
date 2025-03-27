@@ -8,7 +8,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
 
-            <form action="{{route('account.addAccount')}}" method="post" id="addAccountForm">
+            <form action="{{route('account.store')}}" method="post" id="addAccountForm">
                 @csrf
                 @method('post')
             

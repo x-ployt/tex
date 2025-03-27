@@ -124,7 +124,7 @@
                 <select name="order_status" id="order_status" class="form-control">
                     <option value="For Delivery" selected>For Delivery</option>
                     <option value="Delivered">Delivered</option>
-                    <option value="Cancelled">Cancelled</option>
+                    <option value="RTS">RTS</option>
                 </select>
             </div>
 
