@@ -19,16 +19,18 @@
 
                 {{-- Modal Body --}}
                 <div class="modal-body">
+                    @php
+                        $remarks = \App\Models\Remark::where('type', 'Re-Schedule Delivery')->get()
+                    @endphp
+
                     <h6 class="fw-bold mb-3">Please select a reason for rescheduling.</h6>
                     <div class="mb-3">
                         <label for="delivery_remarks{{ $order->id }}" class="form-label">Reschedule Reason: <span class="text-danger">*</span></label>
                         <select name="delivery_remarks" id="delivery_remarks{{ $order->id }}" class="form-control" required>
                             <option value="" disabled selected>Select a reason</option>
-                            <option value="Customer Cannot be reached">Customer Cannot be reached</option>
-                            <option value="Customer Refused to Accept the parcel">Customer Refused to Accept the parcel</option>
-                            <option value="Customer Re-scheduled the delivery">Customer Re-scheduled the delivery</option>
-                            <option value="Payment is not ready">Payment is not ready</option>
-                            <option value="Rider Cannot locate the address (incomplete)">Rider Cannot locate the address (incomplete)</option>
+                            @foreach ($remarks as $remark)
+                                <option value="{{ $remark->remarks }}">{{ $remark->remarks }}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>

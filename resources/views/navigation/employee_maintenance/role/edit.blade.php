@@ -8,7 +8,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content text-left">
 
-            <form action="{{route('role.updateRole', $role)}}" method="post" id="editRoleForm">
+            <form action="{{route('role.update', $role)}}" method="post" id="editRoleForm">
                 @csrf
                 @method('put')
             

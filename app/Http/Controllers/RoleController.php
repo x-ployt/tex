@@ -20,14 +20,14 @@ class RoleController extends Controller
     /**
      * Redirect to role.view
      */
-    public function view(Role $branch) {
+    public function view(Role $role) {
         return view('navigation.role.view', compact('role'));
     }
 
     /**
      * Function to create a role
      */
-    public function addRole(RoleValidation $request)
+    public function store(RoleValidation $request)
     {
         $data = $request->validated();
         Role::create($data);
@@ -37,7 +37,7 @@ class RoleController extends Controller
     /**
      * Function to update a role
      */
-    public function updateRole(RoleValidation $request, Role $role)
+    public function update(RoleValidation $request, Role $role)
     {
         $data = $request->validated();
         $role->update($data);

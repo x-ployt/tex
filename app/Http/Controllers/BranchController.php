@@ -27,7 +27,7 @@ class BranchController extends Controller
     /**
      * Function to create a branch
      */
-    public function addBranch(BranchValidation $request)
+    public function store(BranchValidation $request)
     {
         $data = $request->validated();
         Branch::create($data);
@@ -37,7 +37,7 @@ class BranchController extends Controller
     /**
      * Function to update a branch
      */
-    public function updateBranch(BranchValidation $request, Branch $branch)
+    public function update(BranchValidation $request, Branch $branch)
     {
         $data = $request->validated();
         $branch->update($data);

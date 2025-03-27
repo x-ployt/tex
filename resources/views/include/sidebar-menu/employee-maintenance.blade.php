@@ -1,6 +1,6 @@
 {{-- Employee Maintenance --}}
 <li class="nav-item {{ Str::contains(Request::url(), '/employee-maintenance') ? 'menu-is-opening menu-open' : 'menu-close' }}">
-    <a href="#" class="nav-link {{ Str::contains(Request::url(), '/employee_maintenance') ? 'active' : '' }}">
+    <a href="#" class="nav-link {{ Str::contains(Request::url(), '/employee-maintenance') ? 'active' : '' }}">
         <i class="fa-solid fa-fw fa-user-gear" style="color: #fda720;"></i>
         <p style="margin-left: 2px;">Employee<i class="right fas fa-fw fa-angle-left"></i></p>
     </a>

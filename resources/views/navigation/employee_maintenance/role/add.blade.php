@@ -10,7 +10,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
 
-            <form action="{{route('role.addRole')}}" method="post" id="addRoleForm">
+            <form action="{{route('role.store')}}" method="post" id="addRoleForm">
                 @csrf
                 @method('post')
             

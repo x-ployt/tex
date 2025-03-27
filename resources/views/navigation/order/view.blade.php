@@ -65,7 +65,7 @@
                     @if($order->order_status === 'Re-Schedule Delivery') bg-warning 
                     @elseif($order->order_status === 'For Delivery') bg-primary 
                     @elseif($order->order_status === 'Delivered') bg-success 
-                    @elseif($order->order_status === 'Cancelled') bg-danger 
+                    @elseif($order->order_status === 'RTS') bg-danger 
                     @endif">
                     {{ $order->order_status }}
                 </span>
@@ -86,7 +86,7 @@
                     <div class="row overflow-auto">
                         <div class="d-flex">
                             @foreach(json_decode($order->file_paths) as $filePath)
-                                <div class="col-md-4 mb-3" style="flex: 0 0 auto; width: 33.333%;">
+                                <div class="border rounded overflow-auto" style="max-height: 300px; max-width: 300px;">
                                     {{-- Fancybox gallery for each ticket --}}
                                     <a href="{{ asset('storage/' . $filePath) }}" data-fancybox="gallery-{{ $order->id }}">
                                         <img src="{{ asset('storage/' . $filePath) }}" class="img-fluid" alt="Order Image" style="cursor: pointer; max-width: 100%; height: auto; border: 2px solid #ddd; border-radius: 4px;">
@@ -99,14 +99,16 @@
             @endif
         </div>
     </div>
-
-    {{-- Action Buttons Section --}}
-    <div class="card-footer">
-        <div class="d-flex gap-1 justify-content-end">
-            {{-- Edit button for order --}}
-            @include('navigation.order.edit')
+    
+    {{-- Footer --}}
+    @if ($order->order_status != 'Delivered' && $order->order_status != 'RTS')
+        <div class="card-footer">
+            <div class="d-flex gap-1 justify-content-end">
+                {{-- Edit button for order --}}
+                @include('navigation.order.edit')
+            </div>
         </div>
-    </div>
+    @endif
 </div>
 
 {{-- Scripts --}}

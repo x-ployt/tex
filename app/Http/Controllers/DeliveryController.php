@@ -100,32 +100,28 @@ class DeliveryController extends Controller
     }
 
     /**
-     * Function to mark the order as "Cancelled"
+     * Function to mark the order as "RTS"
      */
-    public function markCancelled(DeliveryValidation $request, Order $order)
+    public function markRTS(DeliveryValidation $request, Order $order)
     {
         $order->update([
-            'order_status' => 'Cancelled',
+            'order_status' => 'RTS',
             'reason' => $request->reason
         ]);
 
         OrderHistory::updateOrCreate(
-            ['order_id' => $order->id, 'order_status' => 'Cancelled', 'delivery_remarks' => $order->reason]
+            ['order_id' => $order->id, 'order_status' => 'RTS', 'delivery_remarks' => $order->reason]
         );
         
         return redirect()->route('delivery.view', $order)
-                         ->with('updateSuccess', 'Order marked as cancelled.');
+                         ->with('updateSuccess', 'Order marked as rts.');
     }
 
     /**
      * Function to mark the order as "Re-Schedule Delivery"
      */
-    public function markReschedule(Request $request, Order $order)
+    public function markReschedule(DeliveryValidation $request, Order $order)
     {
-        $request->validate([
-            'delivery_remarks' => 'required|in:Customer Cannot be reached,Customer Refused to Accept the parcel,Customer Re-scheduled the delivery,Payment is not ready,Rider Cannot locate the address (incomplete)'
-        ]);
-
         // Update order status
         $order->update([
             'order_status' => 'Re-Schedule Delivery',

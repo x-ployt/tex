@@ -7,9 +7,10 @@
 
         {{-- SuperAdmin Sidebar --}}
         @if(Auth::user()->role->role_name == 'SuperAdmin')
-            @include('include.sidebar-menu.branch')
+            @include('include.sidebar-menu.branch') 
             @include('include.sidebar-menu.employee-maintenance')
             @include('include.sidebar-menu.order')
+            @include('include.sidebar-menu.setting')
 
         {{-- Admin Sidebar --}}
         @elseif(Auth::user()->role->role_name == 'Admin')

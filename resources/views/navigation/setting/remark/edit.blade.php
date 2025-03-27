@@ -1,42 +1,44 @@
 {{-- Edit Button --}}
-<button id="editBranchBtn{{$branch->id}}" class="btn lightGreenBtn" title="Edit Branch">
+<button id="editRemarkBtn{{$remark->id}}" class="btn lightGreenBtn" title="Edit Remark">
     <span> <i class="fa-solid fa-pencil"> </i> Edit </span>
 </button>
 
-{{-- Edit Branch--}}
-<div class="modal fade" id="editBranch{{$branch->id}}" data-bs-backdrop="static" data-bs-keyboard="false">
+{{-- Edit Remark--}}
+<div class="modal fade" id="editRemark{{$remark->id}}" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content text-left">
 
-            <form action="{{route('branch.update', $branch)}}" method="post" id="editBranchForm">
+            <form action="{{route('remark.update', $remark)}}" method="post" id="editRemarkForm">
                 @csrf
                 @method('put')
             
                 {{-- Modal Header --}}
                 <div class="modal-header align-items-center" id="lightGreenModal">
-                    <h5 class="modal-title">Edit Branch</h5>
+                    <h5 class="modal-title">Edit Remark</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="filter: invert(1);"></button>
                 </div>
 
                {{-- Modal Body --}}
                 <div class="modal-body">
 
-                    {{-- Name --}}
+                    {{-- Remarks --}}
                     <div class="mb-3">
-                        <label for="branch_name" class="form-label">Branch Name:<span class="text-danger">*</span></label>
-                        <input type="text" name="branch_name" id="branch_name{{$branch->id}}" class="form-control" placeholder="Branch Name" 
+                        <label for="name" class="form-label">Full Name:<span class="text-danger">*</span></label>
+                        <input type="text" name="name" id="name{{$remark->id}}" class="form-control" placeholder="Enter Full Name" 
                         pattern="[A-Za-z ]+" maxlength="50" oninput="this.value = this.value.replace(/[^A-Za-z ]/g, '');"
-                        value="{{ $branch->branch_name }}" required>
-                        <x-error-message field="branch_name"/>
+                        value="{{ $remark->name }}" required>
+                        <x-error-message field="name"/>
                     </div>
-
-                    {{-- Branch Address --}}
+                    
+                    {{-- Type --}}
                     <div class="mb-3">
-                        <label for="branch_address" class="form-label">Branch Address:<span class="text-danger">*</span></label>
-                        <input type="text" name="branch_address" id="branch_address{{$branch->id}}" class="form-control" placeholder="Branch address" 
-                        pattern="[A-Za-z ]+" maxlength="50"
-                        value="{{ $branch->branch_address }}" required>
-                        <x-error-message field="branch_address"/>
+                        <label for="type">Type:<span class="text-danger">*</span></label>
+                        <select class="form-control" name="type" id="type{{$remark->id}}" required>
+                            <option value="{{$remark->type}}">{{$remark->type}}</option>
+                            <option value="Re-Schedule Delivery">Re-Schedule Delivery</option>
+                            <option value="RTS">RTS</option>
+                        </select>
+                        <x-error-message field="type"/>
                     </div>
                     
                 </div>
@@ -44,7 +46,7 @@
 
                 {{-- Modal Footer --}}
                 <div class="modal-footer">
-                    <button onclick="editBranch()" id="lightGreenBtn" type="button" class="btn" title="Update Branch" style="width: auto;">Update</button>
+                    <button onclick="editRemark()" id="lightGreenBtn" type="button" class="btn" title="Update Remark" style="width: auto;">Update</button>
                     <button id="whiteBtn" type="button" class="btn" data-bs-dismiss="modal" title="Cancel">Cancel</button>
                 </div>
 
@@ -52,27 +54,27 @@
         </div>
     </div>
 </div>
-{{-- Edit Branch --}}
+{{-- Edit Remark --}}
 
 {{-- Scripts --}}
 @push('scripts')
 <script>
-    document.querySelector('#editBranchBtn{{$branch->id}}').addEventListener('click', function(){
-        $('#editBranch{{$branch->id}}').modal('show')
+    document.querySelector('#editRemarkBtn{{$remark->id}}').addEventListener('click', function(){
+        $('#editRemark{{$remark->id}}').modal('show')
     })
 </script>
 
 <script> 
-    async function editBranch() {
-        const branch_name = document.getElementById('branch_name{{$branch->id}}').value.trim();
-        const branch_address = document.getElementById('branch_address{{$branch->id}}').value.trim();
+    async function editRemark() {
+        const remarks = document.getElementById('remarks{{$remark->id}}').value.trim();
+        const type = document.getElementById('type{{$remark->id}}').value.trim();
 
         // Perform validations
-        if (!branch_name) {
+        if (!remarks) {
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                text: 'Please enter branch name',
+                text: 'Please enter remarks',
                 allowOutsideClick: false,
                 allowEscapeKey: false,
                 allowEnterKey: false
@@ -80,21 +82,21 @@
             return;
         }
 
-        if (!branch_address) {
+        if (!type) {
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                text: 'Please enter branch address',
+                text: 'Please enter type',
                 allowOutsideClick: false,
                 allowEscapeKey: false,
                 allowEnterKey: false
             });
             return;
         }
-
+        
         // Show a confirmation dialog before submitting the form
         Swal.fire({
-            title: "Do you want to update this Branch's details?",
+            title: "Do you want to update this Remark's details?",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#002050',
@@ -105,13 +107,13 @@
             allowEnterKey: false
         }).then((result) => {
             if (result.isConfirmed) {
-                document.querySelector(`#editBranchForm`).submit();
-                $('#editBranch{{$branch->id}}').modal('hide');
+                document.querySelector(`#editRemarkForm`).submit();
+                $('#editRemark{{$remark->id}}').modal('hide');
 
                 // Show loading indicator
                 Swal.fire({
                     icon: 'info',
-                    title: 'Updating Branch, please wait...',
+                    title: 'Updating Remark, please wait...',
                     showConfirmButton: false,
                     allowOutsideClick: false,
                     allowEscapeKey: false,

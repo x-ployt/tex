@@ -28,9 +28,13 @@ class DeliveryValidation extends FormRequest
                 'delivery_photos'   => 'required|array|min:1',
                 'delivery_photos.*' => 'required|file|mimes:jpg,jpeg,png|max:51200',
             ];
-        } elseif ($routeName === 'order.markCancelled') {
+        } elseif ($routeName === 'order.markRTS') {
             return [
-                'reason' => 'required|string|in:Customer changed mind,Payment issues,Inventory issue,Other',
+                'reason' => 'required|string',
+            ];
+        } elseif ($routeName === 'order.markReschedule') {
+            return [
+                'reason' => 'required|string',
             ];
         }
 
