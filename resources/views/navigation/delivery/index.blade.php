@@ -41,7 +41,7 @@
                     @endphp
                     <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
                         <div class="card bg-light d-flex flex-fill position-relative">
-                            @if ($order->order_status != 'Delivered' && $order->order_status != 'Cancelled')
+                            @if ($order->order_status != 'Delivered' && $order->order_status != 'RTS')
                                 @if ($dateDiff >= 3)
                                     <div class="ribbon-wrapper ribbon-lg">
                                         <div class="ribbon bg-danger text-md">
