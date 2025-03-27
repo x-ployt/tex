@@ -64,7 +64,7 @@
                 <input type="text" name="customer_contact_number" id="customer_contact_number" class="form-control" 
                 placeholder="Enter Contact Number" 
                 pattern="[0-9]+" 
-                maxlength="11" 
+                maxlength="12" 
                 oninput="this.value = this.value.replace(/[^0-9]/g, '');" 
                 value="{{ old('customer_contact_number') }}" 
                 autocomplete="off" required>

@@ -35,8 +35,8 @@
                         <label for="type">Type:<span class="text-danger">*</span></label>
                         <select class="form-control" name="type" id="type" required>
                             <option value="" selected disabled>Select Type</option>
-                            <option value="Re-Schedule Delivery" selected>Re-Schedule Delivery</option>
-                            <option value="RTS" selected>RTS</option>
+                            <option value="Re-Schedule Delivery">Re-Schedule Delivery</option>
+                            <option value="RTS">RTS</option>
                             
                         </select>
                         <x-error-message field="type"/>

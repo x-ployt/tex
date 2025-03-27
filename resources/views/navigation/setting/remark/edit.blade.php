@@ -23,10 +23,10 @@
 
                     {{-- Remarks --}}
                     <div class="mb-3">
-                        <label for="name" class="form-label">Full Name:<span class="text-danger">*</span></label>
-                        <input type="text" name="name" id="name{{$remark->id}}" class="form-control" placeholder="Enter Full Name" 
+                        <label for="remarks" class="form-label">Remarks:<span class="text-danger">*</span></label>
+                        <input type="text" name="remarks" id="remarks{{$remark->id}}" class="form-control" placeholder="Enter Remarks" 
                         pattern="[A-Za-z ]+" maxlength="50" oninput="this.value = this.value.replace(/[^A-Za-z ]/g, '');"
-                        value="{{ $remark->name }}" required>
+                        value="{{ $remark->remarks }}" required>
                         <x-error-message field="name"/>
                     </div>
                     

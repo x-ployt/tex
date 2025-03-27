@@ -65,7 +65,7 @@
             {{-- Reason --}}
             @if(!empty($order->reason))
                 <div class="col-md-12 mt-2">
-                    <h6 class="font-weight-bold d-inline">Reason for rts:</h6>
+                    <h6 class="font-weight-bold d-inline">Reason:</h6>
                     <span class="text-dark" style="font-size: 15px;">{{ $order->reason }}</span>
                 </div>
             @endif

@@ -24,7 +24,7 @@
                         $currentDate = strtotime(now());
                         $dateDiff = floor(($currentDate - $orderDate) / (60 * 60 * 24));
                         
-                        if ($order->order_status === 'Cancelled') {
+                        if ($order->order_status === 'RTS') {
                             $bg = 'bg-danger';
                         } elseif ($order->order_status === 'Delivered') {
                             $bg = 'bg-success';
@@ -122,7 +122,7 @@
                             let bgClass = '';
                             let ribbonHtml = '';
 
-                            if (order.order_status === 'Cancelled') {
+                            if (order.order_status === 'RTS') {
                                 bgClass = 'bg-danger';
                             } else if (order.order_status === 'Delivered') {
                                 bgClass = 'bg-success';
@@ -134,7 +134,7 @@
                                 bgClass = 'bg-orange';
                             }
 
-                            if (dateDiff >= 3 && order.order_status !== 'Delivered' && order.order_status !== 'Cancelled') {
+                            if (dateDiff >= 3 && order.order_status !== 'Delivered' && order.order_status !== 'RTS') {
                                 ribbonHtml = `<div class="ribbon-wrapper ribbon-lg">
                                                 <div class="ribbon bg-danger text-md">${dateDiff} Days Due</div>
                                             </div>`;

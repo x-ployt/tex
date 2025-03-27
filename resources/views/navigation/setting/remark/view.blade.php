@@ -1,72 +1,42 @@
 @extends('layout') {{-- including layout.blade.php --}}
-@section('title', 'View Employee Account') {{-- changing title of the page --}}
+@section('title', 'View Remark Details') {{-- changing title of the page --}}
 @section('content')
 
 {{-- Breadcrumb --}}
 <ol class="breadcrumb float">
     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-    <li class="breadcrumb-item">Employee Maintenance</li>
-    <li class="breadcrumb-item"><a href="{{ route('account.index') }}">Employee Account</a></li>
-    <li class="breadcrumb-item active">View Employee Account</li>
+    <li class="breadcrumb-item">Settings</li>
+    <li class="breadcrumb-item"><a href="{{ route('remark.index') }}">Remark</a></li>
+    <li class="breadcrumb-item active">View Remark</li>
 </ol>
 
 {{-- Back Button at the Top --}}
 <div class="mb-3">
-    <a href="{{ route('account.index') }}" class="btn btn-secondary">
+    <a href="{{ route('remark.index') }}" class="btn btn-secondary">
         <i class="fa fa-arrow-left"></i> Back
     </a>
 </div>
 
-{{-- Employee Account Details Display --}}
+{{-- Remark Details Display --}}
 <div class="card card-outline details-container">
     <div class="card-header">
-        <h3>Employee Account Details</h3>
+        <h3>Remark Details</h3>
     </div>
     <div class="card-body">
-
         <div class="row">
 
-            {{-- Full Name --}}
+            {{-- Remarks --}}
             <div class="col-md-12">
-                <h6 class="font-weight-bold d-inline">Full Name:</h6>
-                <span class="text-dark" style="font-size: 15px;">{{ $user->name }}</span>
+                <h6 class="font-weight-bold d-inline">Remarks:</h6>
+                <span class="text-dark" style="font-size: 15px;">{{ $remark->remarks }}</span>
             </div>
 
-            {{-- Username --}}
+            {{-- Type --}}
             <div class="col-md-12 mt-2">
-                <h6 class="font-weight-bold d-inline">Username:</h6>
-                <span class="text-dark" style="font-size: 15px;">{{ $user->username }}</span>
+                <h6 class="font-weight-bold d-inline">Type:</h6>
+                <span class="text-dark" style="font-size: 15px;">{{ $remark->type }}</span>
             </div>
 
-            {{-- Email --}}
-            <div class="col-md-12 mt-2">
-                <h6 class="font-weight-bold d-inline">Email:</h6>
-                <span class="text-dark" style="font-size: 15px;">{{ $user->email }}</span>
-            </div>
-
-            {{-- Contact Number --}}
-            <div class="col-md-12 mt-2">
-                <h6 class="font-weight-bold d-inline">Contact Number:</h6>
-                <span class="text-dark" style="font-size: 15px;">{{ $user->contact_number }}</span>
-            </div>
-
-            {{-- Role --}}
-            <div class="col-md-12 mt-2">
-                <h6 class="font-weight-bold d-inline">Role:</h6>
-                <span class="text-dark" style="font-size: 15px;">{{ $user->role->role_name }}</span>
-            </div>
-
-            {{-- Branch --}}
-            <div class="col-md-12 mt-2">
-                <h6 class="font-weight-bold d-inline">Branch:</h6>
-                <span class="text-dark" style="font-size: 15px;">{{ $user->branch->branch_name }}</span>
-            </div>
-
-            {{-- Branch Address --}}
-            <div class="col-md-12 mt-2">
-                <h6 class="font-weight-bold d-inline">Branch Address:</h6>
-                <span class="text-dark" style="font-size: 15px;">{{ $user->branch->branch_address }}</span>
-            </div>
         </div>
     </div>
 
@@ -74,8 +44,8 @@
     <div class="card-footer">
         <div class="d-flex gap-1 justify-content-end">
 
-            {{-- Edit button for employee account --}}
-            @include('navigation.employee_maintenance.account.edit')
+            {{-- Edit button for remark --}}
+            @include('navigation.setting.remark.edit')
 
         </div>
     </div>
@@ -101,11 +71,11 @@
         })
     })
 </script>
-@elseif($errors->has('updateAccount'))
+@elseif($errors->has('updateRemark'))
 <script type="module">
     $(function(){
-        const userID = {{$errors->first('updateAccount')}}
-        $(`#editAccount${userID}`).modal('show')
+        const remarkID = {{$errors->first('updateRemark')}}
+        $(`#editRemark${remarkID}`).modal('show')
         Toast.fire({
             icon: 'warning',
             title: 'Update error'
