@@ -112,8 +112,8 @@ class OrderController extends Controller
             'Contact Number'  => 'customer_contact_number',
             'Amount'  => 'order_amount',
             'MOP'  => 'order_mop',
-            'Branch'      => 'branch_name', // Changed from 'Branch ID' to 'Branch Name'
-            'Rider'       => 'rider_name',  // New column to get user_id from users table
+            'Branch'      => 'branch_name', 
+            'Rider'       => 'rider_name',  
             'Status'     => 'order_status',
         ];
 
@@ -136,6 +136,15 @@ class OrderController extends Controller
 
             if (!$mappedRow) {
                 return back()->withErrors(['error' => 'Error: CSV format issue. Please check the file.']);
+            }
+
+            // Normalize order_date to Y-m-d format
+            if (!empty($mappedRow['order_date'])) {
+                try {
+                    $mappedRow['order_date'] = \Carbon\Carbon::parse($mappedRow['order_date'])->format('Y-m-d');
+                } catch (\Exception $e) {
+                    return back()->withErrors(['error' => "Invalid date format for order date: '{$mappedRow['order_date']}'"]);
+                }
             }
 
             // Find the branch ID based on branch name

@@ -25,14 +25,23 @@ class BulkOrderValidation extends FormRequest
     {
         return [
             'orders' => 'required|array',
-            'orders.*.order_date' => 'required|string',
+            'orders.*.order_date' => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    try {
+                        \Carbon\Carbon::parse($value);
+                    } catch (\Exception $e) {
+                        $fail("The {$attribute} must be a valid date.");
+                    }
+                }
+            ],
             'orders.*.order_no' => 'required|string|unique:orders,order_no',
             'orders.*.customer_name' => 'required|string',
             'orders.*.customer_address' => 'required|string',
             'orders.*.customer_contact_number' => 'required|string|max:11;',
             'orders.*.order_amount' => 'required|string',
             'orders.*.order_mop' => 'required|string',
-            
+
             // Validate branch_name and check if it exists in the branches table
             'orders.*.branch_name' => [
                 'required',
@@ -57,5 +66,4 @@ class BulkOrderValidation extends FormRequest
             'orders.*.order_status' => 'required|string',
         ];
     }
-
 }
