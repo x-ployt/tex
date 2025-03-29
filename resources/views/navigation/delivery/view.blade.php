@@ -4,7 +4,7 @@
 
 <ol class="breadcrumb float">
     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-    <li class="breadcrumb-item"><a href="{{ route('order.index') }}">Orders</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('delivery.index') }}">Salveowell Delivery</a></li>
     <li class="breadcrumb-item active">View Order Details</li>
 </ol>
 
