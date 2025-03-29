@@ -90,7 +90,9 @@
                     <option value="Remittance">Remittance</option>
                     <option value="Bank">Bank</option>
                     <option value="Credit/Debit Card">Credit/Debit Card</option>
+                    <option value="S-Wallet">S-Wallet</option>
                     <option value="Xendit">Xendit</option>
+                    <option value="Other">Other</option>
                 </select>
             </div>
 
