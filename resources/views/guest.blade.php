@@ -9,30 +9,41 @@
 
     {{-- CSS --}}
     @include('include.css')
-
+    @include('include.guest-css')
+    
     <!-- CSRF Token for AJAX Requests -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
-    <div class="container mt-5">
-        <div class="card p-4">
-            <h4 class="text-center mb-3">Track your Order</h4>
+    <div class="container mt-5" style="background: transparent; max-width: 50%; margin: 0 auto;">
+        <h2 class="text-center" style="font-weight: bold;">
+            <span style="color: #0a3d1f;">Salveo</span><span style="color: #b1781d;">Well</span>
+        </h2>
+        <h4 class="text-center mb-4" style="font-weight: bold; color: black;">Track and Trace</h4>
+    
             
-            <form id="trackOrderForm">
-                <div class="input-group mb-3">
-                    <input type="text" name="order_no" id="order_no" class="form-control" placeholder="Enter Order No" required>
-                    <button type="submit" class="btn btn-success">Search</button>
-                </div>
-            </form>
+        <form id="trackOrderForm">
+            <div class="input-group mb-3">
+                <input type="text" name="order_no" id="order_no" class="form-control" placeholder="Enter Order No" required>
+                <button type="submit" class="btn btn-success">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </form>
             
+        <!-- Initially hidden card -->
+        <div class="card p-4 d-none" id="trackingCard">
+            <!-- Tracking Result Section -->
             <div id="trackingResult" class="d-none">
                 <h5 class="text-center text-muted" id="trackingAddress"></h5>
                 <div class="timeline mt-3" id="trackingEntries"></div>
             </div>
             
+            <!-- Error Message Section -->
             <div id="orderError" class="alert alert-danger d-none mt-3"></div>
         </div>
     </div>
+    
 
     {{-- Scripts --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -40,6 +51,7 @@
     document.addEventListener("DOMContentLoaded", function () {
         const form = document.getElementById("trackOrderForm");
         const orderNoInput = document.getElementById("order_no");
+        const trackingCard = document.getElementById("trackingCard");
         const trackingResult = document.getElementById("trackingResult");
         const trackingEntries = document.getElementById("trackingEntries");
         const orderError = document.getElementById("orderError");
@@ -53,6 +65,9 @@
             trackingEntries.innerHTML = "";
             trackingResult.classList.add("d-none");
             orderError.classList.add("d-none");
+
+            // Show tracking card after successful search
+            trackingCard.classList.remove("d-none");
 
             fetch("{{ route('track.order.search') }}", {
                 method: "POST",
@@ -81,7 +96,7 @@
                         "For Delivery": "fa-truck-fast bg-blue",
                         "Re-Schedule Delivery": "fa-clock bg-yellow",
                         "Delivered": "fa-check bg-green",
-                        "Cancelled": "fa-times bg-red"
+                        "RTS": "fa-times bg-red"
                     }[step.order_status] || "fa-info-circle bg-secondary";
 
                     let showRiderDetailsButton = latestEntry && latestEntry.order_status === "Re-Schedule Delivery" && index === 0;
@@ -97,11 +112,10 @@
                                 <h3 class="timeline-header text-black">${step.order_status}</h3>
                                 <div class="timeline-body">
                                     ${step.delivery_remarks ? `<p class="text-italic"><i>${step.delivery_remarks}</i></p>` : ''}
-                                    ${showRiderDetailsButton ? `
+                                    ${showRiderDetailsButton ? ` 
                                         <button class="btn btn-sm btn-secondary viewRiderDetails" data-order-id="${data.order_no}">
                                             View Rider Details
-                                        </button>
-                                    ` : ''}
+                                        </button>` : ''}
                                 </div>
                             </div>
                         </div>
@@ -122,8 +136,8 @@
                             confirmButtonText: "Verify",
                             cancelButtonText: "Cancel",
                             inputAttributes: {
-                                minlength: "11",
-                                maxlength: "11",
+                                minlength: "12",
+                                maxlength: "12",
                                 autocapitalize: "off",
                                 autocorrect: "off",
                                 autocomplete: "off"
