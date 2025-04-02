@@ -16,6 +16,10 @@
     <body class="layout-navbar-fixed layout-fixed sidebar-mini" style="font-family: 'Inter', sans-serif; font-size: 15px;">
         
         <div class="wrapper">
+
+            <div class="preloader flex-column justify-content-center align-items-center">
+                <i class="fas fa-spinner fa-spin fa-3x" style="color: #4CAF50;"></i>
+            </div>
             
             {{-- Navbar --}}
             <nav id="navBar" class="main-header navbar navbar-expand" style="background-color: #4CAF50; color: white;">
