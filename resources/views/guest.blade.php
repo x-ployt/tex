@@ -15,17 +15,18 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
-    <div class="container mt-5" style="background: transparent; max-width: 50%; margin: 0 auto;">
-        <h2 class="text-center" style="font-weight: bold;">
-            <span style="color: #0a3d1f;">Salveo</span><span style="color: #b1781d;">Well</span>
+    <div class="container mt-5" style="background: transparent;">
+        <h2 class="text-4xl font-extrabold text-center">
+            <span class="text-green-800">salveo</span><span class="text-yellow-600">well</span>
         </h2>
-        <h4 class="text-center mb-4" style="font-weight: bold; color: black;">Track and Trace</h4>
+        <h2 class="text-xl text-center text-black mb-4">Track and Trace</h2>
+        
     
             
         <form id="trackOrderForm">
             <div class="input-group mb-3">
-                <input type="text" name="order_no" id="order_no" class="form-control" placeholder="Enter Order No" required>
-                <button type="submit" class="btn btn-success">
+                <input type="text" name="order_no" id="order_no" class="form-control form-control-lg" placeholder="Enter Order No" style="font-size: 16px;" required>
+                <button type="submit" class="btn btn-success btn-lg">
                     <i class="fas fa-search"></i>
                 </button>
             </div>
