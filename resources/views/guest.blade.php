@@ -27,7 +27,7 @@
         <!-- Tracking Form -->
         <form id="trackOrderForm">
             <div class="input-group mb-3">
-                <input type="text" name="order_no" id="order_no" class="form-control form-control-lg" placeholder="Enter Order No" required>
+                <input type="text" name="order_no" id="order_no" class="form-control form-control-lg" placeholder="Enter Order No" style="font-size: 16px;" required>
                 <button type="submit" class="btn btn-success btn-lg">
                     <i class="fas fa-search"></i>
                 </button>
