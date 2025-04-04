@@ -7,8 +7,8 @@
 
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-        <!-- Font Awesome -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        @include('include.css')
+        @include('include.login-css')
     </head>
     <body class="min-h-screen flex items-center justify-center bg-[#A5D6A7] !important" style="font-family: 'Inter', sans-serif; font-size: 16px;">
         <div class="w-full max-w-md p-8 space-y-6 bg-white shadow-lg rounded-2xl border-t-4 border-[#4CAF50] !important">
