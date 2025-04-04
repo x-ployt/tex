@@ -23,11 +23,10 @@
 
     <div class="table-responsive" style="overflow-x: auto; white-space: nowrap;">
         <table id="data_table" class="table table-bordered table-sm table-striped">
+
+            {{-- Select status --}}
             @include('navigation.order.select-status')
-            {{-- <label for="from">From</label>
-            <input type="text" id="from" name="from">
-            <label for="to">to</label>
-            <input type="text" id="to" name="to"> --}}
+
             <thead>
                 <tr>
                     <th>Order Date</th>

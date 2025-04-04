@@ -15,35 +15,38 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
-    <div class="container mt-5" style="background: transparent;">
-        <h2 class="text-4xl font-extrabold text-center">
-            <span class="text-green-800">salveo</span><span class="text-yellow-600">well</span>
-        </h2>
-        <h2 class="text-xl text-center text-black mb-4">Track and Trace</h2>
-        
+    <div class="container mt-5 bg-transparent">
+        <!-- Centered Logo -->
+        <div class="d-flex justify-content-center">
+            <img src="{{ asset('photos/salveowell-logo.png') }}" alt="Salveowell Logo" class="img-fluid" style="max-width: 200px;">
+        </div>
     
-            
+        <!-- Track and Trace Title -->
+        <h2 class="text-center text-black mb-4 fw-bold fs-2">Track and Trace</h2>
+    
+        <!-- Tracking Form -->
         <form id="trackOrderForm">
             <div class="input-group mb-3">
-                <input type="text" name="order_no" id="order_no" class="form-control form-control-lg" placeholder="Enter Order No" style="font-size: 16px;" required>
+                <input type="text" name="order_no" id="order_no" class="form-control form-control-lg" placeholder="Enter Order No" required>
                 <button type="submit" class="btn btn-success btn-lg">
                     <i class="fas fa-search"></i>
                 </button>
             </div>
         </form>
-            
-        <!-- Initially hidden card -->
+    
+        <!-- Tracking Card (Initially Hidden) -->
         <div class="card p-4 d-none" id="trackingCard">
             <!-- Tracking Result Section -->
             <div id="trackingResult" class="d-none">
                 <h5 class="text-center text-muted" id="trackingAddress"></h5>
                 <div class="timeline mt-3" id="trackingEntries"></div>
             </div>
-            
+    
             <!-- Error Message Section -->
             <div id="orderError" class="alert alert-danger d-none mt-3"></div>
         </div>
     </div>
+    
     
 
     {{-- Scripts --}}
