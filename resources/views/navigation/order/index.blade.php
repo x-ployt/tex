@@ -4,29 +4,31 @@
 
 {{-- Breadcrumb --}}
 <ol class="breadcrumb float">
-    <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Dashboard</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
     <li class="breadcrumb-item active">Salveowell Order</li>
 </ol>
 
 {{-- Data Table --}}
 <div class="table-container card card-outline">
-
-    <div class="d-flex align-items-center justify-content-between flex-wrap mb-4">
-        <h4 class="text-primary-color fw-bold text-capitalize">Salveowell Order</h4>
-        <div class="ms-auto">
-            {{-- Create Button --}}
-            <a href="{{ route('order.create') }}" class="btn lightGreenBtn" title="Create Order">
-                <span> <i class="fa-solid fa-plus"></i> Create Order </span>
-            </a>
-        </div>
-    </div>    
-
     <div class="table-responsive" style="overflow-x: auto; white-space: nowrap;">
+
+        <div class="d-flex align-items-center justify-content-between flex-wrap mb-4">
+            <h4 class="text-primary-color fw-bold text-capitalize">Salveowell Order</h4>
+            <div class="ms-auto">
+                {{-- Create Button --}}
+                <a href="{{ route('order.create') }}" class="btn lightGreenBtn" title="Create Order">
+                    <span> <i class="fa-solid fa-plus"></i> Create Order </span>
+                </a>
+            </div>
+        </div>  
+
+        {{-- Date filter --}}
+        @include('navigation.order.date-filter')
+
+        {{-- Select status --}}
+        {{-- @include('navigation.order.select-status') --}}
+
         <table id="data_table" class="table table-bordered table-sm table-striped">
-
-            {{-- Select status --}}
-            @include('navigation.order.select-status')
-
             <thead>
                 <tr>
                     <th>Order Date</th>
@@ -58,7 +60,7 @@
                         <td>{{ $order->order_mop }}</td>
                         <td>{{ $order->branch->branch_name }}</td>
                         <td>{{ $order->assignedUser->name }}</td>
-                        <td>   
+                        <td>
                             <span class="badge 
                                 @if($order->order_status === 'Re-Schedule Delivery') bg-warning 
                                 @elseif($order->order_status === 'For Delivery') bg-primary 
@@ -86,12 +88,9 @@
         </table>
     </div>
 </div>
-{{-- Data Table --}}
 
 {{-- Scripts --}}
 @push('scripts')
-
-{{-- @if (Auth::user()->role->role_name === 'SuperAdmin') --}}
 <script>
     $(document).ready(function() {
         new DataTable('#data_table', {
@@ -114,7 +113,7 @@
                         format: {
                             body: function (data, row, column, node) {
                                 if ($(node).find('span').length) {
-                                    return $(node).find('span').text().trim(); // Extract text only
+                                    return $(node).find('span').text().trim();
                                 }
                                 return node.hasAttribute('title') ? node.getAttribute('title') : data;
                             }
@@ -125,103 +124,5 @@
         });
     });
 </script>
-
-
-
-    // $( function() {
-    //     var dateFormat = "mm/dd/yy",
-    //     from = $( "#from" )
-    //         .datepicker({
-    //         defaultDate: "+1w",
-    //         changeMonth: true,
-    //         numberOfMonths: 3
-    //         })
-    //         .on( "change", function() {
-    //         to.datepicker( "option", "minDate", getDate( this ) );
-    //         }),
-    //     to = $( "#to" ).datepicker({
-    //         defaultDate: "+1w",
-    //         changeMonth: true,
-    //         numberOfMonths: 3
-    //     })
-    //     .on( "change", function() {
-    //         from.datepicker( "option", "maxDate", getDate( this ) );
-    //     });
-    
-    //     function getDate( element ) {
-    //     var date;
-    //     try {
-    //         date = $.datepicker.parseDate( dateFormat, element.value );
-    //     } catch( error ) {
-    //         date = null;
-    //     }
-    
-    //     return date;
-    //     }
-    // });
-</script>
-
-{{-- @else 
-<script>
-    $(document).ready(function() {
-        new DataTable('#data_table', {
-            columnDefs: [
-                { orderable: false, targets: [9] },
-                { width: "auto", targets: '_all' },
-                { className: 'text-center', targets: '_all' }
-            ],
-            fixedHeader: true,
-            layout: {
-                topStart: {
-                    buttons: [
-                        {
-                            extend: 'excel',
-                            text: 'Export as excel',
-                            className: 'btn btn-sm btn-primary', 
-                            exportOptions: {
-                                modifier: { page: 'current' },
-                                columns: ':not(:last-child)' 
-                            }
-                        }
-                    ]
-                }
-            },
-        });
-    });
-    
-    // $( function() {
-    //     var dateFormat = "mm/dd/yy",
-    //     from = $( "#from" )
-    //         .datepicker({
-    //         defaultDate: "+1w",
-    //         changeMonth: true,
-    //         numberOfMonths: 3
-    //         })
-    //         .on( "change", function() {
-    //         to.datepicker( "option", "minDate", getDate( this ) );
-    //         }),
-    //     to = $( "#to" ).datepicker({
-    //         defaultDate: "+1w",
-    //         changeMonth: true,
-    //         numberOfMonths: 3
-    //     })
-    //     .on( "change", function() {
-    //         from.datepicker( "option", "maxDate", getDate( this ) );
-    //     });
-    
-    //     function getDate( element ) {
-    //     var date;
-    //     try {
-    //         date = $.datepicker.parseDate( dateFormat, element.value );
-    //     } catch( error ) {
-    //         date = null;
-    //     }
-    
-    //     return date;
-    //     }
-    // });
-</script>
-@endif --}}
-
 @endpush
 @endsection
