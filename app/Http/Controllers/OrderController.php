@@ -19,23 +19,38 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         $authUser = Auth::user();
+        $query = Order::query();
 
-        // Start building the query
-        if ($authUser->role->role_name !== 'SuperAdmin') {
-            $query = Order::where('branch_id', $authUser->branch_id);
-        } else {
-            $query = Order::query(); // Allows additional filtering
+        // Get today's date
+        $today = now()->toDateString();
+
+        // Default filter values
+        $fromDate = $request->input('from_date', $today);
+        $toDate = $request->input('to_date', $today);
+        $selectedBranch = $request->input('branch_id', $authUser->branch_id); // Default to user's branch
+
+        // Fetch only required branch data (ID & Name)
+        $branches = Branch::get();
+
+        // Apply branch filter (Even SuperAdmins see only their branch initially)
+        if ($selectedBranch !== 'all') {
+            $query->where('branch_id', $selectedBranch);
         }
-        
-        // Apply order status filter if it's not 'all'
+
+        // Apply date filters
+        $query->whereBetween('order_date', [$fromDate, $toDate]);
+
+        // Apply order status filter
         if ($request->filled('order_status') && $request->order_status !== 'all') {
             $query->where('order_status', $request->order_status);
         }
 
+        // Fetch orders
         $orders = $query->get();
 
-        return view('navigation.order.index', compact('orders'));
+        return view('navigation.order.index', compact('orders', 'fromDate', 'toDate', 'branches', 'selectedBranch'));
     }
+
 
     /**
      * Redirecting to order.create
