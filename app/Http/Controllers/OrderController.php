@@ -10,6 +10,7 @@ use App\Http\Requests\BulkOrderValidation;
 use App\Http\Requests\OrderValidation;
 use App\Models\OrderHistory;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class OrderController extends Controller
 {
@@ -21,36 +22,30 @@ class OrderController extends Controller
         $authUser = Auth::user();
         $query = Order::query();
 
-        // Get today's date
         $today = now()->toDateString();
 
-        // Default filter values
-        $fromDate = $request->input('from_date', $today);
-        $toDate = $request->input('to_date', $today);
-        $selectedBranch = $request->input('branch_id', $authUser->branch_id); // Default to user's branch
+        // Updated: Use Carbon to get full day range
+        $fromDate = Carbon::parse($request->input('from_date', $today))->startOfDay();
+        $toDate = Carbon::parse($request->input('to_date', $today))->endOfDay();
+        $selectedBranch = $request->input('branch_id', $authUser->branch_id);
 
-        // Fetch only required branch data (ID & Name)
         $branches = Branch::get();
 
-        // Apply branch filter (Even SuperAdmins see only their branch initially)
         if ($selectedBranch !== 'all') {
             $query->where('branch_id', $selectedBranch);
         }
 
-        // Apply date filters
-        $query->whereBetween('order_date', [$fromDate, $toDate]);
+        // Apply fixed date range filter
+        $query->whereBetween('created_at', [$fromDate, $toDate]);
 
-        // Apply order status filter
         if ($request->filled('order_status') && $request->order_status !== 'all') {
             $query->where('order_status', $request->order_status);
         }
 
-        // Fetch orders
         $orders = $query->get();
 
         return view('navigation.order.index', compact('orders', 'fromDate', 'toDate', 'branches', 'selectedBranch'));
     }
-
 
     /**
      * Redirecting to order.create
@@ -113,7 +108,7 @@ class OrderController extends Controller
         $data = array_map('str_getcsv', file($file->getRealPath()));
 
         if (empty($data)) {
-            return back()->withErrors(['error' => 'Error: CSV file is empty or not formatted correctly.']);
+            return back()->withErrors(['error' => 'CSV file is empty or not formatted correctly.']);
         }
 
         $csvHeaders = array_shift($data); // Extract headers
@@ -121,21 +116,21 @@ class OrderController extends Controller
         // Define a mapping from CSV column names to database fields
         $columnMap = [
             'Order Date'         => 'order_date',
-            'Order No.'         => 'order_no',
-            'Customer Name'    => 'customer_name',
-            'Address' => 'customer_address',
-            'Contact Number'  => 'customer_contact_number',
-            'Amount'  => 'order_amount',
-            'MOP'  => 'order_mop',
-            'Branch'      => 'branch_name', 
-            'Rider'       => 'rider_name',  
-            'Status'     => 'order_status',
+            'Order No.'          => 'order_no',
+            'Customer Name'      => 'customer_name',
+            'Address'            => 'customer_address',
+            'Contact Number'     => 'customer_contact_number',
+            'Amount'             => 'order_amount',
+            'MOP'                => 'order_mop',
+            'Branch'             => 'branch_name',
+            'Rider'              => 'rider_name',
+            'Status'             => 'order_status',
         ];
 
         // Check if headers match expected values
         foreach ($csvHeaders as $header) {
             if (!isset($columnMap[$header])) {
-                return back()->withErrors(['error' => 'Error: Invalid column name in CSV file. Please check the template.']);
+                return back()->withErrors(['error' => 'Invalid column name in CSV file. Please check the template.']);
             }
         }
 
@@ -143,14 +138,22 @@ class OrderController extends Controller
 
         foreach ($data as $row) {
             $mappedRow = [];
+
             foreach ($csvHeaders as $index => $csvHeader) {
                 if (isset($columnMap[$csvHeader])) {
-                    $mappedRow[$columnMap[$csvHeader]] = $row[$index] ?? null;
+                    $value = $row[$index] ?? null;
+
+                    // Trim specific fields
+                    if (in_array($columnMap[$csvHeader], ['order_no', 'branch_name', 'rider_name', 'order_status', 'customer_contact_number']) && $value !== null) {
+                        $value = trim($value);
+                    }
+
+                    $mappedRow[$columnMap[$csvHeader]] = $value;
                 }
             }
 
             if (!$mappedRow) {
-                return back()->withErrors(['error' => 'Error: CSV format issue. Please check the file.']);
+                return back()->withErrors(['error' => 'CSV format issue. Please check the file.']);
             }
 
             // Normalize order_date to Y-m-d format
@@ -165,29 +168,29 @@ class OrderController extends Controller
             // Find the branch ID based on branch name
             $branch = Branch::where('branch_name', $mappedRow['branch_name'])->first();
             if (!$branch) {
-                return back()->withErrors(['error' => "Error: Branch '{$mappedRow['branch_name']}' not found in the system."]);
+                return back()->withErrors(['error' => "Branch '{$mappedRow['branch_name']}' not found in the system."]);
             }
-            $mappedRow['branch_id'] = $branch->id; // Replace branch_name with branch_id
+            $mappedRow['branch_id'] = $branch->id;
             unset($mappedRow['branch_name']);
 
             // Find the user ID based on rider name
             $user = User::where('name', $mappedRow['rider_name'])->first();
             if (!$user) {
-                return back()->withErrors(['error' => "Error: Rider '{$mappedRow['rider_name']}' not found in the system."]);
+                return back()->withErrors(['error' => "Rider '{$mappedRow['rider_name']}' not found in the system."]);
             }
-            $mappedRow['assigned_user_id'] = $user->id; // Replace rider_name with assigned_user_id
+            $mappedRow['assigned_user_id'] = $user->id;
             unset($mappedRow['rider_name']);
 
             // Create or update the order
             $order = Order::updateOrCreate(
-                ['order_no' => $mappedRow['order_no']], // Find existing order by order_no
-                $mappedRow // Update or create with this data
+                ['order_no' => $mappedRow['order_no']],
+                $mappedRow
             );
 
             // Default delivery remarks for "For Delivery" status
             $deliveryRemarks = ($order->order_status === "For Delivery") ? "Order is out for delivery" : null;
 
-            // Create order history entry for every update or create
+            // Create order history entry
             $orderHistories[] = [
                 'order_id' => $order->id,
                 'order_status' => $order->order_status,
@@ -197,13 +200,14 @@ class OrderController extends Controller
             ];
         }
 
-        // Insert order history records
+        // Insert all order history records
         if (!empty($orderHistories)) {
             OrderHistory::insert($orderHistories);
         }
 
         return back()->with('addSuccess', 'Bulk orders processed successfully.');
     }
+
 
     /**
      * Redirecting to view $order

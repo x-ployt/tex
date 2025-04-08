@@ -136,7 +136,7 @@
         <form action="{{ route('order.bulkStore') }}" method="POST" id="bulkOrderForm" enctype="multipart/form-data" style="display: none;">
             @csrf
             <div class="mb-3">
-                <label>Upload Bulk Orders (CSV or JSON):</label>
+                <label>Upload Bulk Orders (CSV):</label>
                 <input type="file" name="bulk_orders" class="form-control" accept=".csv, .json" required>
                 <x-error-message field="bulk_orders"/>
             </div>        

@@ -10,7 +10,7 @@
 
 {{-- Back Button at the Top --}}
 <div class="mb-3">
-    <a href="{{ route('delivery.index') }}" class="btn btn-secondary">
+    <a href="{{ url()->previous() }}" onclick="handleBack(event)" class="btn btn-secondary">
         <i class="fa fa-arrow-left"></i> Back
     </a>
 </div>
@@ -109,6 +109,16 @@
 
 {{-- Scripts --}}
 @push('scripts')
+
+{{-- Back button --}}
+<script>
+    function handleBack(event) {
+        if (history.length > 1) {
+            event.preventDefault();
+            history.back();
+        }
+    }
+</script>
 
 {{-- Success Nofitication --}}
 @if(session()->has('updateSuccess'))
