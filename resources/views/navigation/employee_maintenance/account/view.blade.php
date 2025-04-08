@@ -12,7 +12,7 @@
 
 {{-- Back Button at the Top --}}
 <div class="mb-3">
-    <a href="{{ route('account.index') }}" class="btn btn-secondary">
+    <a href="{{ url()->previous() }}" onclick="handleBack(event)" class="btn btn-secondary">
         <i class="fa fa-arrow-left"></i> Back
     </a>
 </div>
@@ -81,8 +81,20 @@
     </div>
 </div>
 
-{{-- Success Toast Notification --}}
+{{-- Scripts --}}
 @push('scripts')
+
+{{-- Back button --}}
+<script>
+    function handleBack(event) {
+        if (history.length > 1) {
+            event.preventDefault();
+            history.back();
+        }
+    }
+</script>
+
+{{-- Add Success notification --}}
 @if(session()->has('updateSuccess'))
 <script type="module">
     $(function(){
@@ -92,6 +104,8 @@
         })
     })
 </script>
+
+{{-- Update Success Notification --}}
 @elseif(session()->has('updateSuccess'))
 <script type="module">
     $(function(){
@@ -101,6 +115,8 @@
         })
     })
 </script>
+
+{{-- Error Notification --}}
 @elseif($errors->has('updateAccount'))
 <script type="module">
     $(function(){
