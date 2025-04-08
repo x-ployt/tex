@@ -5,12 +5,12 @@
         <div>
             <label for="from_date" class="form-label">From</label>
             <input type="date" id="from_date" name="from_date" class="form-control"
-                   value="{{ request('from_date', $fromDate) }}" required>
+                   value="{{ request('from_date') ?? $fromDate->format('Y-m-d') }}" required>
         </div>
         <div>
             <label for="to_date" class="form-label">To</label>
             <input type="date" id="to_date" name="to_date" class="form-control"
-                   value="{{ request('to_date', $toDate) }}" required>
+                   value="{{ request('to_date') ?? $toDate->format('Y-m-d') }}" required>
         </div>
 
         {{-- Branch Filter (Only for SuperAdmin) --}}
@@ -18,7 +18,7 @@
             <div>
                 <label for="branch_id" class="form-label">Branch</label>
                 <select id="branch_id" name="branch_id" class="form-select" required>
-                    <option value="{{ Auth::user()->branch_id }}" selected>
+                    <option value="{{ Auth::user()->branch_id }}" {{ request('branch_id') == Auth::user()->branch_id ? 'selected' : '' }}>
                         {{ $branches->firstWhere('id', Auth::user()->branch_id)?->branch_name ?? 'Unknown Branch' }}
                     </option>
                     <option value="all" {{ request('branch_id') == 'all' ? 'selected' : '' }}>All</option>
