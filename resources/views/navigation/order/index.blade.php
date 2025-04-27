@@ -43,6 +43,7 @@
                     <th>Status</th>
                     <th>Dispatched Date</th>
                     <th>Order Updated</th>
+                    <th>Remarks</th>
                     <th class="action" style="width: 50px;">Action</th>
                 </tr>
             </thead>
@@ -50,7 +51,11 @@
                 @foreach ($orders as $order)
                     <tr>
                         <td>{{ date("Y-m-d", strtotime($order->order_date)) }}</td>
-                        <td>{{ $order->order_no }}</td>
+                        <td>
+                            <a href="{{ route('order.view', $order) }}" style="text-decoration: none;">
+                                {{ $order->order_no }}
+                            </a>
+                        </td>
                         <td>{{ $order->customer_name }}</td>
                         <td title="{{ $order->customer_address }}">
                             {{ \Illuminate\Support\Str::limit($order->customer_address, 50, '...') }}
@@ -77,6 +82,9 @@
                             @else
                                 {{ date("Y-m-d", strtotime($order->updated_at)) }}
                             @endif
+                        </td>
+                        <td>
+                            {{ optional($order->orderHistory->sortByDesc('created_at')->first())->delivery_remarks ?? 'N/A' }}
                         </td>
                         <td>
                             {{-- View Button --}}

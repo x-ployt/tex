@@ -71,13 +71,11 @@
                 </span>
             </div>
             
-            {{-- Reason --}}
-            @if(!empty($order->reason))
-                <div class="col-md-12 mt-2">
-                    <h6 class="font-weight-bold d-inline">Reason for cancel:</h6>
-                    <span class="text-dark" style="font-size: 15px;">{{ $order->reason }}</span>
-                </div>
-            @endif
+            {{-- Remarks --}}
+            <div class="col-md-12 mt-2">
+                <h6 class="font-weight-bold d-inline">Remarks:</h6>
+                <span class="text-dark" style="font-size: 15px;"> {{ optional($order->orderHistory->sortByDesc('created_at')->first())->delivery_remarks ?? 'N/A' }}</span>
+            </div>
 
             {{-- File Attachments --}}
             @if(!empty($order->file_paths))
