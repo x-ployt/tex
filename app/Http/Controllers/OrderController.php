@@ -243,12 +243,20 @@ class OrderController extends Controller
     {
         // Check previous order status before updating
         $previousStatus = $order->order_status;
+        // $userName = Auth::user()->name;
+        // $roleName = Auth::user()->role->role_name;
 
         // Update order
         $order->update($request->validated());
 
         if ($request->order_status == 'For Delivery') {
-            $deliveryRemarks = 'Out for Delivery';
+            $deliveryRemarks = 'Order is out for delivery.';
+        } elseif ($request->order_status == 'Re-Schedule Delivery') {
+            $deliveryRemarks = 'Order Re-Scheduled by an admin.';
+        } elseif ($request->order_status == 'RTS') {
+            $deliveryRemarks = 'An admin updated this order status to RTS.';
+        } elseif ($request->order_status == 'Delivered') {
+            $deliveryRemarks = 'An admin updated this order status to Delivered.';
         }
 
         // Check if the order status has changed
