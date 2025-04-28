@@ -51,11 +51,7 @@
                 @foreach ($orders as $order)
                     <tr>
                         <td>{{ date("Y-m-d", strtotime($order->order_date)) }}</td>
-                        <td>
-                            <a href="{{ route('order.view', $order) }}" style="text-decoration: none;">
-                                {{ $order->order_no }}
-                            </a>
-                        </td>
+                        <td>{{ $order->order_no }}</td>
                         <td>{{ $order->customer_name }}</td>
                         <td title="{{ $order->customer_address }}">
                             {{ \Illuminate\Support\Str::limit($order->customer_address, 50, '...') }}
