@@ -101,7 +101,7 @@
             lengthMenu: [10, 25, 50, 100], 
             pageLength: 10,
             columnDefs: [
-                { orderable: false, targets: [12] }, 
+                { orderable: false, targets: [13] }, 
                 { width: "auto", targets: '_all' },
                 { className: 'text-center', targets: '_all' }
             ],
