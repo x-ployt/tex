@@ -106,7 +106,7 @@
                         <label for="order_status{{$order->id}}" class="form-label">Order Status:</label>
                         <select name="order_status" id="order_status{{$order->id}}" class="form-control">
                             <option value="For Delivery" {{ $order->order_status == 'For Delivery' ? 'selected' : '' }}>For Delivery</option>
-                            <option value="Re-Schedule Delivery" {{ $order->order_status == 'Re-Schedule Delivery' ? 'selected' : '' }}>For Delivery</option>
+                            <option value="Re-Schedule Delivery" {{ $order->order_status == 'Re-Schedule Delivery' ? 'selected' : '' }}>Re-Schedule Delivery</option>
                             <option value="Delivered" {{ $order->order_status == 'Delivered' ? 'selected' : '' }}>Delivered</option>
                             <option value="RTS" {{ $order->order_status == 'RTS' ? 'selected' : '' }}>RTS</option>
                         </select>
