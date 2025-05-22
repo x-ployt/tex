@@ -99,7 +99,7 @@
     </div>
     
     {{-- Footer --}}
-    @if (Auth::user()->role->role_name === 'SuperAdmin' || ($order->order_status !== 'Delivered' && $order->order_status !== 'RTS'))
+    @if (Auth::user()->role->role_name === 'SuperAdmin' || Auth::user()->role->role_name === 'Admin')
         <div class="card-footer">
             <div class="d-flex gap-1 justify-content-end">
                 {{-- Edit button for order --}}
