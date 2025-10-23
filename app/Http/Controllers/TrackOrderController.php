@@ -36,30 +36,29 @@ class TrackOrderController extends Controller
     }
 
     public function verifyOrder(Request $request)
-{
-    $order = Order::where('order_no', $request->order_no)->first();
+    {
+        $order = Order::where('order_no', $request->order_no)->first();
 
-    if (!$order) {
-        return response()->json(['error' => 'Order not found.'], 404);
+        if (!$order) {
+            return response()->json(['error' => 'Order not found.'], 404);
+        }
+
+        if ($order->customer_contact_number !== $request->customer_contact_number) {
+            return response()->json(['error' => 'Invalid contact number.'], 403);
+        }
+
+        if (!$order->assigned_user_id) {
+            return response()->json(['error' => 'No assigned rider for this order.'], 404);
+        }
+
+        $rider = $order->assignedUser; // Get assigned rider details
+
+        return response()->json([
+            'rider' => [
+                'name' => $rider->name,
+                'contact_number' => $rider->contact_number
+            ]
+        ]);
     }
-
-    if ($order->customer_contact_number !== $request->customer_contact_number) {
-        return response()->json(['error' => 'Invalid contact number.'], 403);
-    }
-
-    if (!$order->assigned_user_id) {
-        return response()->json(['error' => 'No assigned rider for this order.'], 404);
-    }
-
-    $rider = $order->assignedUser; // Get assigned rider details
-
-    return response()->json([
-        'rider' => [
-            'name' => $rider->name,
-            'contact_number' => $rider->contact_number
-        ]
-    ]);
-}
-
     
 }

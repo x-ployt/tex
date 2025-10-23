@@ -29,7 +29,7 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'SuperAdminOnly'])->group(function () {
 
-    Route::prefix('branches')->group(function () {
+    Route::prefix('salveowell-branches')->group(function () {
         Route::get('/', [BranchController::class, 'index'])->name('branch.index');
         Route::get('/{branch}/view', [BranchController::class, 'view'])->name('branch.view');
         Route::post('/add', [BranchController::class, 'store'])->name('branch.store');
