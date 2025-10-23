@@ -34,7 +34,7 @@
                     <div class="mb-3">
                         <label for="branch_address" class="form-label">Branch Address:<span class="text-danger">*</span></label>
                         <input type="text" name="branch_address" id="branch_address" class="form-control" placeholder="Enter Address" 
-                        pattern="[A-Za-z ]+" maxlength="50"
+                        pattern="[A-Za-z ]+" maxlength="100"
                         value="{{ old('branch_address') }}" required>
                         <x-error-message field="branch_address"/>
                     </div>
