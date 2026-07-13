@@ -31,6 +31,7 @@ class AccountValidation extends FormRequest
                 'contact_number' => 'required|string|max:11',
                 'branch_id' => 'required|string|max:50',
                 'role_id' => 'required|string|max:50',
+                'status' => 'required|boolean',
             ];
         } elseif ($this->method() === 'PUT') {
             return [
@@ -40,8 +41,10 @@ class AccountValidation extends FormRequest
                 'contact_number' => 'required|string|max:11',
                 'branch_id' => 'required|string|max:50',
                 'role_id' => 'required|string|max:50',
+                'status' => 'required|boolean',
             ];
         }
+        return [];
     }
 
     protected function failedValidation(ValidationValidator $validator)
