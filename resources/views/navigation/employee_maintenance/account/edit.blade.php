@@ -78,7 +78,23 @@
                             @endforeach
                         </select>
                         <x-error-message field="role_id"/>
-                        </div>
+                    </div>
+
+                    {{-- Status --}}
+                    <div class="mb-3">
+                        <label for="status{{ $user->id }}" class="form-label">
+                            Status:<span class="text-danger">*</span>
+                        </label>
+                        <select class="form-control" name="status" id="status{{ $user->id }}" required>
+                            <option value="1" {{ $user->status ? 'selected' : '' }}>
+                                Active
+                            </option>
+                            <option value="0" {{ !$user->status ? 'selected' : '' }}>
+                                Inactive
+                            </option>
+                        </select>
+                        <x-error-message field="status"/>
+                    </div>
                     
                 </div>
                 {{-- Modal Body --}}

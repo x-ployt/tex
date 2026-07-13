@@ -84,7 +84,22 @@
                         </select>
                         <x-error-message field="role_id"/>
                     </div>
-                    
+
+                    <div class="mb-3">
+                        <label for="status" class="form-label">
+                            Status:<span class="text-danger">*</span>
+                        </label>
+                        <select class="form-control" name="status" id="status" required>
+                            <option value="1" {{ old('status', 1) == 1 ? 'selected' : '' }}>
+                                Active
+                            </option>
+                            <option value="0" {{ old('status') === '0' ? 'selected' : '' }}>
+                                Inactive
+                            </option>
+                        </select>
+                        <x-error-message field="status"/>
+                    </div>
+                                        
                 </div>
                 {{-- Modal Body --}}
 
@@ -117,6 +132,7 @@
         const email = document.getElementById('email').value.trim();
         const branch_id = document.getElementById('branch_id').value.trim();
         const role_id = document.getElementById('role_id').value.trim();
+        const status = document.getElementById('status').value;
 
         if (!name) {
             Swal.fire({
@@ -183,6 +199,18 @@
                 icon: 'error',
                 title: 'Error',
                 text: 'Please select role',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                allowEnterKey: false
+            });
+            return;
+        }
+
+        if (status === "") {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Please select status',
                 allowOutsideClick: false,
                 allowEscapeKey: false,
                 allowEnterKey: false

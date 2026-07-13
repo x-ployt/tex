@@ -67,6 +67,17 @@
                 <h6 class="font-weight-bold d-inline">Branch Address:</h6>
                 <span class="text-dark" style="font-size: 15px;">{{ $user->branch->branch_address }}</span>
             </div>
+            
+            {{-- Status --}}
+            <div class="col-md-12 mt-2">
+                <h6 class="font-weight-bold d-inline">Status:</h6>
+
+                @if($user->status)
+                    <span class="badge bg-success">Active</span>
+                @else
+                    <span class="badge bg-danger">Inactive</span>
+                @endif
+            </div>
         </div>
     </div>
 
@@ -96,17 +107,6 @@
 
 {{-- Add Success notification --}}
 @if(session()->has('updateSuccess'))
-<script type="module">
-    $(function(){
-        Toast.fire({
-            icon: 'success',
-            title: '{{session('updateSuccess')}}'
-        })
-    })
-</script>
-
-{{-- Update Success Notification --}}
-@elseif(session()->has('updateSuccess'))
 <script type="module">
     $(function(){
         Toast.fire({

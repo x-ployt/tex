@@ -34,6 +34,7 @@ class BranchValidation extends FormRequest
                 'branch_address' => ['required', 'string', 'max:50', Rule::unique('branches')->ignore($this->branch->id)],
             ];
         }
+        return [];
     }
 
     protected function failedValidation(ValidationValidator $validator)

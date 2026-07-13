@@ -26,6 +26,7 @@
                 <th>Email</th>
                 <th>Role</th>
                 <th>Branch Name</th>
+                <th>Status</th>
                 <th class="action" style="width: 50px;">View</th>
             </tr>
         </thead>
@@ -37,6 +38,13 @@
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->role->role_name }}</td>
                     <td>{{ $user->branch->branch_name }}</td>
+                    <td>
+                        @if($user->status)
+                            <span class="badge bg-success">Active</span>
+                        @else
+                            <span class="badge bg-danger">Inactive</span>
+                        @endif
+                    </td>
                     <td>
                         {{-- View Button --}}
                         <x-view-button id="viewBtn{{ $user->id }}" class="extra-class" route="{{ route('account.view', $user) }}" title="View Account Details"/>
@@ -54,7 +62,7 @@
 <script>
     new DataTable('#data_table', {
         columnDefs: [
-            {orderable: false, targets: [5]},
+            {orderable: false, targets: [6]},
             {width: "auto", targets: '_all'},
             {className: 'text-center', targets: '_all' }
         ],
