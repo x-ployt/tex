@@ -56,22 +56,26 @@ class OrderController extends Controller
 
         if ($authUser->role->role_name == 'Admin') {
 
-            $riders = User::where('branch_id', $authUser->branch_id)->whereHas('role', function ($q) {
-                $q->where('role_name', 'Rider');
-            })->get();
+            $riders = User::where('branch_id', $authUser->branch_id)
+                ->where('status', 1)
+                ->whereHas('role', function ($q) {
+                    $q->where('role_name', 'Rider');
+                })
+                ->get();
 
             $branches = Branch::where('id', $authUser->branch_id)->get();
 
         } else {
 
-            $riders = User::whereHas('role', function ($q) {
-                $q->where('role_name', 'Rider');
-            })->get();
-            
-            $branches = Branch::all(); 
+            $riders = User::where('status', 1)
+                ->whereHas('role', function ($q) {
+                    $q->where('role_name', 'Rider');
+                })
+                ->get();
+
+            $branches = Branch::all();
         }
-        
-        
+
         return view('navigation.order.create', compact('riders', 'branches'));
     }
 
